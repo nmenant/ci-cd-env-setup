@@ -19,7 +19,10 @@ RUN apt-get update && \
         software-properties-common \
 	jq \
 	python \
+	python-pip \
 	wget \ 
+	git \
+	python-setuptools \
 	python-requests && \
     curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add - && \
     add-apt-repository \
