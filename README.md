@@ -1,7 +1,7 @@
 SETUP CI CD ENV
 ===============
 
-.. WARNING:: This is work in progress. Those scripts will works but the docker volumes have not been
+!!WARNING!! This is work in progress. Those scripts will works but the docker volumes have not been
     transfered YET on this repo
 
 This repo will automatically setup a "CI/CD" environment on the laptop with: Gitlab, Jenkins, Consul, Minishift and some default pipeline/examples
@@ -38,8 +38,6 @@ Update Consul
 
 Consul can be used to store infrastructure information leveraged by Jenkins. By default it contains the following default KV:
 
-.. code::
-
     GET http://127.0.0.1:8500/v1/kv/?keys
 
     [
@@ -59,7 +57,6 @@ They are used in the 2 default jenkins pipeline. You still need to update a few 
 
 Update those values accordingly to your infrastructure
 
-.. code::
 
     To check a key value:
     GET http://127.0.0.1:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
