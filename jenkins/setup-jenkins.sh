@@ -8,7 +8,7 @@ docker run \
     -v $1/jenkins:/var/jenkins_home \
     -p 1180:8080 \
     -p 11000:50000 \
-    --ip='172.17.0.3' \
+    --net mydockernetwork --ip='172.18.0.3' \
     --name jenkins \
     jenkins-with-python-docker
 

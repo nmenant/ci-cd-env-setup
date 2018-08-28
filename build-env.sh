@@ -1,4 +1,6 @@
 #!/bin/sh
+# Static IP for containers can only be done in a user defined network so you'll need to create it first
+# docker network create --subnet=172.18.0.0/16 mydockernetwork
 
 CONTAINERS_VOL="/Users/menant/projects/containers_vol"
 
