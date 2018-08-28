@@ -8,6 +8,7 @@ sh gitlab/setup-gitlab.sh $CONTAINERS_VOL
 
 ## Setup Jenkins
 docker rm jenkins
+docker rmi jenkins-with-python-docker
 sh jenkins/setup-jenkins.sh $CONTAINERS_VOL
 
 ## Setup Consul
