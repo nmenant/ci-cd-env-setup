@@ -14,3 +14,4 @@ sh jenkins/setup-jenkins.sh $CONTAINERS_VOL
 ## Setup Consul
 docker rm consul
 sh consul/setup-consul.sh $CONTAINERS_VOL
+
