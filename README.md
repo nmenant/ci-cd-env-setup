@@ -11,6 +11,7 @@ Requirements
 
 * Docker must be installed
 * The build setup is based for a MAC OS X
+* AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
 
 Installing the setup
 --------------------
