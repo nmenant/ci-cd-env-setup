@@ -27,3 +27,5 @@ minishift addons install --defaults
 
 minishift addons enable admin-user
 
+minishift addon apply admin-user
+
