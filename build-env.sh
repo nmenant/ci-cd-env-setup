@@ -60,7 +60,7 @@ if [[ "$platform" == 'Linux' ]]; then
     mkdir minishift 
     wget https://github.com/minishift/minishift/releases/download/v1.23.0/minishift-1.23.0-linux-amd64.tgz
     tar zxf minishift-1.23.0-linux-amd64.tgz -C minishift/
-    mv minishift/minishift-1.23.0-linux-amd64/minishift /usr/local/bin/
+    sudo mv minishift/minishift-1.23.0-linux-amd64/minishift /usr/local/bin/
     sudo firewall-cmd --permanent --add-port 2376/tcp --add-port 8443/tcp --add-port 80/tcp
     dockernet=`sudo docker network inspect -f "{{range .IPAM.Config }}{{ .Subnet }}{{end}}" bridge`
     sudo firewall-cmd --permanent --new-zone minishift
