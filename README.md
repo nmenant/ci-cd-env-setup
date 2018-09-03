@@ -10,9 +10,12 @@ Requirements
 ------------
 
 * Docker must be installed
-* The build setup is based for a MAC OS X
+* The build setup is based for a MAC OS X or a VM running Ubuntu
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
-* The user must be allowed to do sudo commands without password (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
+
+Ubuntu specific requirements:
+
+* The user must be allowed to do sudo commands without password                            (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
 
 Installing the setup
@@ -20,7 +23,9 @@ Installing the setup
 
 Run *build-env.sh* to install the different components:
 
-* A user-defined network in docker will be created (172.18.0.0/16)
+* Update the system and install docker
+* Install Minishift in the VM. You'll be requested for the IP of the VM
+* A user-defined network (ci-cd-docker-net) in docker will be created (172.18.0.0/16)
 * Gitlab will run on 172.18.0.2
 * Jenkins will run on 172.18.0.3
 * Consul will run on 172.18.0.4

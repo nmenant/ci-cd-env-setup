@@ -42,6 +42,37 @@ elif [[ "$platform" == 'Darwin' ]]; then
 fi
 
 ##
+## Retrieve the containers' volumes from AWS S3
+##
+
+echo "#################################################"
+echo "Retrieving the containers volumes"
+echo "#################################################"
+
+mkdir docker_volumes
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
+tar zxf consul.tgz -C docker_volumes
+
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
+tar zxf jenkins.tgz -C docker_volumes
+
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
+tar zxf gitlab.tgz -C docker_volumes
+
+##
+## Check if the docker network ci-cd-docker-net exists. If not, we create it
+## we check for a docker network called ci-cd-docker-net. The subnet use will be 172.18.0.0/16
+##
+
+output=""
+output=`docker network ls  | grep ci-cd-docker-net`
+
+if [[ "$output" == '' ]]; then
+   echo "creating docker network"
+   docker network create --subnet=172.18.0.0/16 ci-cd-docker-net
+fi
+
+##
 ## SETUP MINISHIFT
 ##
 
@@ -83,39 +114,6 @@ elif [[ "$platform" == 'MACOSX' ]]; then
 fi
 
 
-##
-## Retrieve the containers' volumes from AWS S3
-##
-
-echo "#################################################"
-echo "Retrieving the containers volumes"
-echo "#################################################"
-
-mkdir docker_volumes
-curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
-tar zxf consul.tgz -C docker_volumes
-
-curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
-tar zxf jenkins.tgz -C docker_volumes
-
-curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
-tar zxf gitlab.tgz -C docker_volumes
-
-##
-## Check if the docker network ci-cd-docker-net exists. If not, we create it
-## we check for a docker network called ci-cd-docker-net. The subnet use will be 172.18.0.0/16
-##
-
-output=""
-output=`docker network ls  | grep ci-cd-docker-net`
-
-if [[ "$output" == '' ]]; then
-   echo "creating docker network"
-   docker network create --subnet=172.18.0.0/16 ci-cd-docker-net
-fi
-
-
-
 echo "#################################################"
 echo "CONTAINER: SETTING UP GITLAB"
 echo "#################################################"
@@ -135,8 +133,6 @@ if [[ "$platform" == 'Linux' ]]; then
 elif [[ "$platform" == 'MACOSX' ]]; then
    sh jenkins/setup-jenkins.sh $PWD /usr/local/bin/docker
 fi
-
-
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP CONSUL"
