@@ -11,7 +11,7 @@
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
+   platform='Linux'
 elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='MACOSX'
 fi
@@ -22,9 +22,7 @@ fi
 echo "#################################################"
 echo "Updating the platform"
 echo "#################################################"
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
+if [[ "$platform" == 'Linux' ]]; then
     sudo apt-get -y update
     sudo apt-get -y upgrade 
     ##
@@ -35,7 +33,7 @@ if [[ "$unamestr" == 'Linux' ]]; then
     sudo apt-get update
     apt-cache policy docker-ce
     sudo apt-get install -y docker-ce 
-elif [[ "$unamestr" == 'Darwin' ]]; then
+elif [[ "$platform" == 'Darwin' ]]; then
    brew update
 fi
 
@@ -48,15 +46,13 @@ echo "Retrieving the containers volumes"
 echo "#################################################"
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
-tar zxvf consul.tgz
+tar --warning=no-unknown-keyword zxf consul.tgz
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
-tar zxvf jenkins.tgz
+tar --warning=no-unknown-keyword zxf jenkins.tgz
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
-tar zxvf gitlab.tgz
-
-CONTAINERS_VOL="."
+tar --warning=no-unknown-keyword zxf gitlab.tgz
 
 ##
 ## Check if the docker network ci-cd-docker-net exists. If not, we create it
@@ -78,7 +74,7 @@ echo "#################################################"
 
 ## Setup Gitlab
 docker rm gitlab
-sh gitlab/setup-gitlab.sh $CONTAINERS_VOL
+sh gitlab/setup-gitlab.sh 
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP JENKINS"
@@ -86,7 +82,7 @@ echo "#################################################"
 ## Setup Jenkins
 docker rm jenkins
 docker rmi jenkins-with-python-docker
-sh jenkins/setup-jenkins.sh $CONTAINERS_VOL
+sh jenkins/setup-jenkins.sh 
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP CONSUL"
