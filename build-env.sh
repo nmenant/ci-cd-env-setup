@@ -75,7 +75,7 @@ echo "#################################################"
 
 ## Setup Gitlab
 docker rm gitlab
-sh gitlab/setup-gitlab.sh 
+sh gitlab/setup-gitlab.sh $PWD
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP JENKINS"
@@ -83,14 +83,14 @@ echo "#################################################"
 ## Setup Jenkins
 docker rm jenkins
 docker rmi jenkins-with-python-docker
-sh jenkins/setup-jenkins.sh 
+sh jenkins/setup-jenkins.sh $PWD
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP CONSUL"
 echo "#################################################"
 ## Setup Consul
 docker rm consul
-sh consul/setup-consul.sh $CONTAINERS_VOL
+sh consul/setup-consul.sh $PWD
 
 ##
 ## SETUP MINISHIFT
