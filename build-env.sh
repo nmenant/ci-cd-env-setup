@@ -19,6 +19,9 @@ fi
 ##
 ## We make sure that the system is up to date
 ##
+echo "#################################################"
+echo "Updating the platform"
+echo "#################################################"
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
@@ -44,14 +47,16 @@ echo "#################################################"
 echo "Retrieving the containers volumes"
 echo "#################################################"
 
-https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
+tar zxvf consul.tgz
 
-https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
+tar zxvf jenkins.tgz
 
-https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
+tar zxvf gitlab.tgz
 
-
-CONTAINERS_VOL="./"
+CONTAINERS_VOL="."
 
 ##
 ## Check if the docker network ci-cd-docker-net exists. If not, we create it
