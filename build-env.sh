@@ -14,7 +14,7 @@ if [[ "$unamestr" == 'Linux' ]]; then
     if [ -f /etc/redhat-release ]; then
         platform='CentOS'
     elif [ -f /etc/lsb-release ]; then
-        platform="Ubuntu'
+        platform="Ubuntu"
     fi
 elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='MACOSX'
@@ -32,7 +32,7 @@ if [[ "$platform" == 'Ubuntu' ]]; then
     ##
     ## software-properties-common is needed to have add-apt-repository
     ##
-    sudo apt install -y software-properties-common net-tools firewalld
+    sudo apt install -y software-properties-common net-tools firewalld wget
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     sudo apt-get update
     apt-cache policy docker-ce
@@ -40,9 +40,18 @@ if [[ "$platform" == 'Ubuntu' ]]; then
     sudo systemctl start docker
     sudo systemctl enable docker
     sudo systemctl start firewalld
-    sudo systemctl enable firewalld 
+    sudo systemctl enable firewalld
 elif [[ "$platform" == 'Darwin' ]]; then
-   brew update
+    brew update
+elif [[ "$platform" == 'CentOS' ]]; then
+    sudo yum update -y 
+    sudo yum upgrade -y
+    sudo yum install -y 
+    sudo yum install -y docker net-tools firewalld wget
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo systemctl start firewalld
+    sudo systemctl enable firewalld
 fi
 
 ##
@@ -59,7 +68,7 @@ echo "SETTING UP MINISHIFT"
 echo "#################################################"
 
 
-if [[ "$platform" == 'Linux' ]]; then
+if [[ "$unamestr" == 'Linux' ]]; then
     #echo "Linux deployment is not automated yet, please set it up yourself: https://docs.okd.io/latest/minishift/using/run-against-an-existing-machine.html#configuring-existing-remote-machine"
     mkdir minishift 
     wget https://github.com/minishift/minishift/releases/download/v1.23.0/minishift-1.23.0-linux-amd64.tgz
@@ -114,7 +123,7 @@ output=`docker network ls  | grep ci-cd-docker-net`
 
 if [[ "$output" == '' ]]; then
    echo "creating docker network"
-   docker network create --subnet=172.18.0.0/16 ci-cd-docker-net
+   sudo docker network create --subnet=172.18.0.0/16 ci-cd-docker-net
 fi
 
 echo "#################################################"
@@ -122,27 +131,27 @@ echo "CONTAINER: SETTING UP GITLAB"
 echo "#################################################"
 
 ## Launch Gitlab containers
-docker rm gitlab
-sh gitlab/setup-gitlab.sh $PWD
+sudo docker rm gitlab
+sudo sh gitlab/setup-gitlab.sh $PWD
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP JENKINS"
 echo "#################################################"
 ## Launch Jenkins containers
-docker rm jenkins
-docker rmi jenkins-with-python-docker
-if [[ "$platform" == 'Linux' ]]; then
-   sh jenkins/setup-jenkins.sh $PWD /usr/bin/docker
-elif [[ "$platform" == 'MACOSX' ]]; then
-   sh jenkins/setup-jenkins.sh $PWD /usr/local/bin/docker
+sudo docker rm jenkins
+sudo docker rmi jenkins-with-python-docker
+if [[ "$unamestr" == 'Linux' ]]; then
+   sudo sh jenkins/setup-jenkins.sh $PWD /usr/bin/docker
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   sudo sh jenkins/setup-jenkins.sh $PWD /usr/local/bin/docker
 fi
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP CONSUL"
 echo "#################################################"
 ## Launch consul container
-docker rm consul
-sh consul/setup-consul.sh $PWD
+sudo docker rm consul
+sudo sh consul/setup-consul.sh $PWD
 
 ##
 ## SETUP CONSUL
