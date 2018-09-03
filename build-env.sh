@@ -71,7 +71,7 @@ if [[ "$platform" == 'Linux' ]]; then
     minishift addons install --defaults
     minishift addons enable admin-user
     minishift addon apply admin-user
-    minishift start --vm-driver generic --zone=minishift --remote-ipaddress $serverip --remote-ssh-user $USER --remote-ssh-key $HOME/.ssh/id_rsa
+    minishift start --vm-driver generic --remote-ipaddress $serverip --remote-ssh-user $USER --remote-ssh-key $HOME/.ssh/id_rsa
 elif [[ "$platform" == 'MACOSX' ]]; then
     echo "Installing Minishift on a MACOSX platform" 
     brew cask install minishift
