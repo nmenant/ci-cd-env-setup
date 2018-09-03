@@ -46,13 +46,13 @@ echo "Retrieving the containers volumes"
 echo "#################################################"
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
-tar zxf --warning=no-unknown-keyword  consul.tgz
+tar zxf consul.tgz
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
-tar zxf --warning=no-unknown-keyword jenkins.tgz
+tar zxf jenkins.tgz
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
-tar zxf --warning=no-unknown-keyword gitlab.tgz
+tar zxf gitlab.tgz
 
 ##
 ## Check if the docker network ci-cd-docker-net exists. If not, we create it
