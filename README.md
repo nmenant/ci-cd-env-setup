@@ -12,6 +12,8 @@ Requirements
 * Docker must be installed
 * The build setup is based for a MAC OS X
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
+* The user must be allowed to do sudo commands without password (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
+* You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
 
 Installing the setup
 --------------------
@@ -57,7 +59,6 @@ They are used in the 2 default jenkins pipeline. You still need to update a few 
 * if you changed the default credentials of your BIG-IP, you'll need to also update cluster_credentials
 
 Update those values accordingly to your infrastructure
-
 
     To check a key value:
     GET http://127.0.0.1:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
