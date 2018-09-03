@@ -11,7 +11,11 @@
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
-   platform='Linux'
+    if [ -f /etc/redhat-release ]; then
+        platform='CentOS'
+    elif [ -f /etc/lsb-release ]; then
+        platform="Ubuntu'
+    fi
 elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='MACOSX'
 fi
@@ -22,7 +26,7 @@ fi
 echo "#################################################"
 echo "Updating the platform"
 echo "#################################################"
-if [[ "$platform" == 'Linux' ]]; then
+if [[ "$platform" == 'Ubuntu' ]]; then
     sudo apt-get -y update
     sudo apt-get -y upgrade 
     ##
