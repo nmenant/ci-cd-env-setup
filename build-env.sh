@@ -10,9 +10,9 @@
 
 platform='unknown'
 unamestr=`uname`
-if [ "$unamestr" == 'Linux' ]; then
+if [[ "$unamestr" == 'Linux' ]]; then
    platform='linux'
-elif [ "$unamestr" == 'Darwin' ]; then
+elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='MACOSX'
 fi
 
@@ -21,13 +21,13 @@ fi
 ##
 platform='unknown'
 unamestr=`uname`
-if [ "$unamestr" == 'Linux' ]; then
+if [[ "$unamestr" == 'Linux' ]]; then
     sudo apt-get -y update
     sudo apt-get -y upgrade 
     ##
     ## software-properties-common is needed to have add-apt-repository
     ##
-    sudo apt install -y curl software-properties-common
+    sudo apt install -y software-properties-common
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     sudo apt-get update
     apt-cache policy docker-ce
@@ -61,7 +61,7 @@ CONTAINERS_VOL="./"
 output=""
 output=`docker network ls  | grep ci-cd-docker-net`
 
-if [ "$output" == '' ]; then
+if [[ "$output" == '' ]]; then
    echo "creating docker network"
    docker network create --subnet=172.18.0.0/16 ci-cd-docker-net
 fi
@@ -104,10 +104,10 @@ echo "CONTAINER: SETTING UP MINISHIFT"
 echo "#################################################"
 
 
-if [ "$platform" == 'Linux' ]; then
+if [[ "$platform" == 'Linux' ]]; then
    echo "Installing Minishift on a Linux platform"
    curl https://github.com/minishift/minishift/releases/download/v1.23.0/minishift-1.23.0-linux-amd64.tgz --output minishift.tgz
-elif [ "$platform" == 'MACOSX' ]; then
+elif [[ "$platform" == 'MACOSX' ]]; then
    echo "Installing Minishift on a MACOSX platform" 
    brew cask install minishift
 fi
