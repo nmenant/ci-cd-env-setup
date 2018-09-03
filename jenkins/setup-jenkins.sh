@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 docker build -t jenkins-with-python-docker jenkins/
 

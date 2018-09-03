@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## We consider two scenarios: 
 ## 1- you use a MAC and want to install it on your laptop
