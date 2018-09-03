@@ -45,14 +45,15 @@ echo "#################################################"
 echo "Retrieving the containers volumes"
 echo "#################################################"
 
+mkdir docker_volumes
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/consul.tgz --output consul.tgz
-tar zxf consul.tgz
+tar zxf consul.tgz -C docker_volumes
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
-tar zxf jenkins.tgz
+tar zxf jenkins.tgz docker_volumes
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
-tar zxf gitlab.tgz
+tar zxf gitlab.tgz docker_volumes
 
 ##
 ## Check if the docker network ci-cd-docker-net exists. If not, we create it
