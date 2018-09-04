@@ -62,7 +62,7 @@ if [[ "$unamestr" == 'Linux' ]]; then
     sudo firewall-cmd --permanent --zone minishift --add-source $dockernet
     sudo firewall-cmd --permanent --zone minishift --add-port 53/udp --add-port 8053/udp
     sudo firewall-cmd --reload
-    read -p 'VM IP: ' serverip
+    read -p 'Your VM IP: ' serverip
     minishift addons install --defaults
     minishift addons enable admin-user
     minishift start --vm-driver generic --remote-ipaddress $serverip --remote-ssh-user $USER --remote-ssh-key $HOME/.ssh/id_rsa --memory 4Gb
