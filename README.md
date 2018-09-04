@@ -75,14 +75,21 @@ Make sure that docker and firewalld are runnning:
 Installing the env
 ------------------
 
+Retrieve the github repository
+
+    git clone https://github.com/nmenant/ci-cd-env-setup
+    cd ci-cd-env-setup
+
 Run *build-env.sh* to install the different components:
 
-* Update the system and install docker
+* Update the system
 * Install Minishift in the VM. You'll be requested for the IP of the VM
 * A user-defined network (ci-cd-docker-net) in docker will be created (172.18.0.0/16)
 * Gitlab will run on 172.18.0.2
 * Jenkins will run on 172.18.0.3
 * Consul will run on 172.18.0.4
+
+Everything will be started at the same time
 
 Start the environment
 ---------------------
