@@ -58,8 +58,7 @@ tar zxf jenkins.tgz -C docker_volumes
 
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
 tar zxf gitlab.tgz -C docker_volumes
-chmod -R 755 docker_volumes/gitlab
-sudo setfacl -bR docker_volumes/gitlab/
+sudo setfacl -bR docker_volumes/gitlab
 ##
 ## Check if the docker network ci-cd-docker-net exists. If not, we create it
 ## we check for a docker network called ci-cd-docker-net. The subnet use will be 172.18.0.0/16
