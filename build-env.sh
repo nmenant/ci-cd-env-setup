@@ -37,16 +37,6 @@ elif [[ "$platform" == 'CentOS' ]]; then
 fi
 
 ##
-## Setup docker so that user can use docker without using sudo 
-## https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
-##
-if [[ "$unamestr" == 'Linux' ]]; then
-    sudo groupadd docker
-    sudo usermod -aG docker $USER
-fi
-
-
-##
 ## SETUP MINISHIFT
 ##
 

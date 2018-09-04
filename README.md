@@ -23,8 +23,6 @@ Ubuntu/CentOs specific requirements:
 Prepare the Ubuntu platform
 ---------------------------
 
-.. code::
-
     sudo apt-get -y update
     sudo apt-get -y upgrade
     sudo apt install -y software-properties-common net-tools firewalld wget
@@ -40,8 +38,6 @@ Prepare the Ubuntu platform
 
 Make sure that docker and firewalld are runnning:
 
-.. code::
-
     sudo systemctl status docker
     sudo systemctl status firewalld
 
@@ -56,8 +52,6 @@ You'll need to do the following first:
 
 then:
 
-.. code::
-
     sudo yum update -y
     sudo yum upgrade -y
     sudo yum install -y docker net-tools wget firewalld
@@ -70,8 +64,6 @@ then:
     sudo usermod -aG docker $USER
 
 Make sure that docker and firewalld are runnning:
-
-.. code::
 
     sudo systemctl status docker
     sudo systemctl status firewalld
