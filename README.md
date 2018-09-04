@@ -35,7 +35,7 @@ Prepare the Ubuntu platform
     sudo usermod -aG docker $USER
 
 Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
-into account until a restart is done. 
+into account until a restart is done.
 
 Make sure that docker and firewalld are runnning:
 
@@ -65,7 +65,7 @@ then:
     sudo usermod -aG docker $USER
 
 Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
-into account until a restart is done. 
+into account until a restart is done.
 
 Make sure that docker and firewalld are runnning:
 
