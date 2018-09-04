@@ -9,16 +9,14 @@ This repo will automatically setup a "CI/CD" environment on the laptop with: Git
 Requirements
 ------------
 
-* Docker must be installed
-* The build setup is based for a MAC OS X or a VM running Ubuntu
+* This solution is created for MAC OS X, a VM running Ubuntu, a VM Running Centos. If you use a VM, you'll need at least 12Gb of memory
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
 
 Ubuntu/CentOs specific requirements:
 
 * The user must be allowed to do sudo commands without password                            (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
-* Disable SELinux
-* firewalld needs to be installed (reboot required)
+* Disable SELinux (a reboot is required after)
 
 Prepare the Ubuntu platform
 ---------------------------
@@ -35,6 +33,9 @@ Prepare the Ubuntu platform
     # Allow the user to run docker command without sudo - needed for Minishift
     sudo groupadd docker
     sudo usermod -aG docker $USER
+
+Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
+into account until a restart is done. 
 
 Make sure that docker and firewalld are runnning:
 
@@ -62,6 +63,9 @@ then:
     # Allow the user to run docker command without sudo - needed for Minishift
     sudo groupadd docker
     sudo usermod -aG docker $USER
+
+Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
+into account until a restart is done. 
 
 Make sure that docker and firewalld are runnning:
 
