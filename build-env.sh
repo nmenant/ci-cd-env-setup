@@ -39,19 +39,14 @@ if [[ "$platform" == 'Ubuntu' ]]; then
     sudo apt-get install -y docker-ce
     sudo systemctl start docker
     sudo systemctl enable docker
-    sudo systemctl start firewalld
-    sudo systemctl enable firewalld
 elif [[ "$platform" == 'Darwin' ]]; then
     brew update
 elif [[ "$platform" == 'CentOS' ]]; then
     sudo yum update -y 
     sudo yum upgrade -y
-    sudo yum install -y 
-    sudo yum install -y docker net-tools firewalld wget
+    sudo yum install -y docker net-tools wget
     sudo systemctl start docker
     sudo systemctl enable docker
-    sudo systemctl start firewalld
-    sudo systemctl enable firewalld
 fi
 
 ##
@@ -83,8 +78,8 @@ if [[ "$unamestr" == 'Linux' ]]; then
     read -p 'VM IP: ' serverip
     minishift addons install --defaults
     minishift addons enable admin-user
-    minishift addon apply admin-user
     minishift start --vm-driver generic --remote-ipaddress $serverip --remote-ssh-user $USER --remote-ssh-key $HOME/.ssh/id_rsa --memory 4Gb
+    minishift addon apply admin-user
 elif [[ "$platform" == 'MACOSX' ]]; then
     echo "Installing Minishift on a MACOSX platform" 
     brew cask install minishift

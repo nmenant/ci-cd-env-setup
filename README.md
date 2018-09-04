@@ -13,10 +13,11 @@ Requirements
 * The build setup is based for a MAC OS X or a VM running Ubuntu
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
 
-Ubuntu specific requirements:
+Ubuntu/CentOs specific requirements:
 
 * The user must be allowed to do sudo commands without password                            (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
+* Disable SELinux
 
 Installing the setup
 --------------------
