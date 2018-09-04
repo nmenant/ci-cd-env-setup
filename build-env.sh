@@ -72,6 +72,26 @@ if [[ "$output" == '' ]]; then
    sudo docker network create --subnet=172.18.0.0/16 ci-cd-docker-net
 fi
 
+echo "#################################################"
+echo "CONTAINER: SETTING UP GITLAB"
+echo "#################################################"
+
+## Launch Gitlab containers
+docker rm gitlab
+sh gitlab/setup-gitlab.sh $PWD
+
+echo "#################################################"
+echo "CONTAINER: SETTING UP JENKINS"
+echo "#################################################"
+## Launch Jenkins containers
+docker rm jenkins
+docker rmi jenkins-with-python-docker
+if [[ "$unamestr" == 'Linux' ]]; then
+   sh jenkins/setup-jenkins.sh $PWD /usr/bin/docker
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   sh jenkins/setup-jenkins.sh $PWD /usr/local/bin/docker
+fi
+
 ##
 ## SETUP MINISHIFT
 ##
@@ -111,26 +131,6 @@ elif [[ "$platform" == 'MACOSX' ]]; then
     minishift addons enable admin-user
     minishift addon apply admin-user
     minishift start
-fi
-
-echo "#################################################"
-echo "CONTAINER: SETTING UP GITLAB"
-echo "#################################################"
-
-## Launch Gitlab containers
-docker rm gitlab
-sh gitlab/setup-gitlab.sh $PWD
-
-echo "#################################################"
-echo "CONTAINER: SETTING UP JENKINS"
-echo "#################################################"
-## Launch Jenkins containers
-docker rm jenkins
-docker rmi jenkins-with-python-docker
-if [[ "$unamestr" == 'Linux' ]]; then
-   sh jenkins/setup-jenkins.sh $PWD /usr/bin/docker
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   sh jenkins/setup-jenkins.sh $PWD /usr/local/bin/docker
 fi
 
 echo "#################################################"
