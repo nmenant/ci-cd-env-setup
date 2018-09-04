@@ -23,7 +23,7 @@ Prepare the Ubuntu platform
 
     sudo apt-get -y update
     sudo apt-get -y upgrade
-    sudo apt install -y software-properties-common net-tools firewalld wget
+    sudo apt install -y git software-properties-common net-tools firewalld wget
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     sudo apt-get update
     apt-cache policy docker-ce
@@ -55,7 +55,7 @@ then:
 
     sudo yum update -y
     sudo yum upgrade -y
-    sudo yum install -y docker net-tools wget firewalld
+    sudo yum install -y git docker net-tools wget firewalld
     sudo systemctl start docker
     sudo systemctl enable docker
     sudo systemctl start firewalld
