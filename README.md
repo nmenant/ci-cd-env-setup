@@ -18,9 +18,66 @@ Ubuntu/CentOs specific requirements:
 * The user must be allowed to do sudo commands without password                            (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
 * Disable SELinux
+* firewalld needs to be installed (reboot required)
 
-Installing the setup
---------------------
+Prepare the Ubuntu platform
+---------------------------
+
+.. code::
+
+    sudo apt-get -y update
+    sudo apt-get -y upgrade
+    sudo apt install -y software-properties-common net-tools firewalld wget
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    apt-cache policy docker-ce
+    sudo apt-get install -y docker-ce
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    # Allow the user to run docker command without sudo - needed for Minishift
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+
+Make sure that docker and firewalld are runnning:
+
+.. code::
+
+    sudo systemctl status docker
+    sudo systemctl status firewalld
+
+Prepare the CentOs platform
+---------------------------
+
+You'll need to do the following first:
+
+* Disable Selinux (/etc/selinux/config to be updated)
+* Reboot the instance
+* allow user to do sudo command without password (use *sudo visudo* and add a line like *USERNAME ALL=(ALL)       NOPASSWD: ALL*)
+
+then:
+
+.. code::
+
+    sudo yum update -y
+    sudo yum upgrade -y
+    sudo yum install -y docker net-tools wget firewalld
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo systemctl start firewalld
+    sudo systemctl enable firewalld
+    # Allow the user to run docker command without sudo - needed for Minishift
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+
+Make sure that docker and firewalld are runnning:
+
+.. code::
+
+    sudo systemctl status docker
+    sudo systemctl status firewalld
+
+Installing the env
+------------------
 
 Run *build-env.sh* to install the different components:
 

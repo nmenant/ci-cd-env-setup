@@ -29,25 +29,22 @@ echo "#################################################"
 if [[ "$platform" == 'Ubuntu' ]]; then
     sudo apt-get -y update
     sudo apt-get -y upgrade 
-    ##
-    ## software-properties-common is needed to have add-apt-repository
-    ##
-    sudo apt install -y software-properties-common net-tools firewalld wget
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-    sudo apt-get update
-    apt-cache policy docker-ce
-    sudo apt-get install -y docker-ce
-    sudo systemctl start docker
-    sudo systemctl enable docker
 elif [[ "$platform" == 'Darwin' ]]; then
     brew update
 elif [[ "$platform" == 'CentOS' ]]; then
     sudo yum update -y 
     sudo yum upgrade -y
-    sudo yum install -y docker net-tools wget
-    sudo systemctl start docker
-    sudo systemctl enable docker
 fi
+
+##
+## Setup docker so that user can use docker without using sudo 
+## https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user
+##
+if [[ "$unamestr" == 'Linux' ]]; then
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+fi
+
 
 ##
 ## SETUP MINISHIFT
