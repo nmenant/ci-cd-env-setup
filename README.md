@@ -14,7 +14,7 @@ Requirements
 
 Ubuntu/CentOs specific requirements:
 
-* The user must be allowed to do sudo commands without password                            (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
+* The user must be allowed to do sudo commands without password (use *sudo visudo* and add a line like *USERNAME ALL=(ALL)       NOPASSWD: ALL*)                         (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
 * Disable SELinux (a reboot is required after)
 
@@ -49,7 +49,6 @@ You'll need to do the following first:
 
 * Disable Selinux (/etc/selinux/config to be updated)
 * Reboot the instance
-* allow user to do sudo command without password (use *sudo visudo* and add a line like *USERNAME ALL=(ALL)       NOPASSWD: ALL*)
 
 then:
 
