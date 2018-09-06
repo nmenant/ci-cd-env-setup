@@ -3,10 +3,13 @@
 ## We consider two scenarios: 
 ## 1- you use a MAC and want to install it on your laptop
 ##      If you use a MAC, we consider that you already have brew and docker installed
-## 2- you want to use a VM to do this and use Ubuntu 16.04 or later. 
-##      If you use a Ubuntu VM, we will try to install everything. 
+## 2- you want to use a VM to do this and use Ubuntu (16.04+) or Centos 7
+##      Follow the README guide to check the pre requisites
 ## Any other deployment is not supported today
 ## 
+
+gitlab_archive='1536226517_2018_09_06_11.2.3_gitlab_backup.tar'
+
 
 platform='unknown'
 unamestr=`uname`
@@ -37,7 +40,7 @@ elif [[ "$platform" == 'CentOS' ]]; then
 fi
 
 ##
-## Retrieve the containers' volumes from AWS S3
+## Retrieve the containers' volumes/backups from AWS S3
 ##
 
 echo "#################################################"
@@ -56,9 +59,11 @@ chmod -R 777 docker_volumes/consul/*
 curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/jenkins.tgz --output jenkins.tgz
 tar zxf jenkins.tgz -C docker_volumes
 
-curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/gitlab.tgz --output gitlab.tgz
-tar zxf gitlab.tgz -C docker_volumes
-sudo setfacl -bR docker_volumes/gitlab
+curl https://s3.eu-west-3.amazonaws.com/nmenant-public/CI-CD+docker-volumes/$gitlab_archive --output $gitlab_archive
+mkdir docker_volumes/gitlab
+mkdir docker_volumes/gitlab/data
+mkdir docker_volumes/gitlab/logs
+mkdir docker_volumes/gitlab/config
 
 ##
 ## Check if the docker network ci-cd-docker-net exists. If not, we create it
@@ -77,9 +82,31 @@ echo "#################################################"
 echo "CONTAINER: SETTING UP GITLAB"
 echo "#################################################"
 
-## Launch Gitlab containers
+## Launch Gitlab container
 docker rm gitlab
-sh gitlab/setup-gitlab.sh $PWD
+sh gitlab/setup-gitlab.sh $PWD $gitlab_archive 
+
+# Give time for the gitlab container to start
+sleep 30
+
+# We start working on restoring the archive 
+# https://gitlab.com/gitlab-org/gitlab-ce/issues/14740
+# https://docs.gitlab.com/ee/raketasks/backup_restore.html
+docker exec gitlab gitlab-ctl reconfigure
+sudo docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
+
+# restore backup now for gitlab container
+docker cp $gitlab_archive gitlab_web_1:/var/opt/gitlab/backups
+sudo docker exec gitlab gitlab-ctl stop unicorn
+sudo docker exec gitlab gitlab-ctl stop sidekiq
+sudo docker exec gitlab chmod -R 775 /var/opt/gitlab/backups
+
+archive_name = `echo $gitlab_archive | sed s/_gitlab_backup.tar//g`
+# note -it flag so you can respond to questions that restore script asks!
+sudo docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$archive_name
+sudo docker exec gitlab gitlab-ctl start
+
+sudo docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP JENKINS"
