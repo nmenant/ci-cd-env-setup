@@ -44,7 +44,7 @@ fi
 ##
 
 echo "#################################################"
-echo "Retrieving the containers volumes"
+echo "Retrieving the containers volumes/Backups"
 echo "#################################################"
 
 mkdir docker_volumes
@@ -93,20 +93,29 @@ sleep 30
 # https://gitlab.com/gitlab-org/gitlab-ce/issues/14740
 # https://docs.gitlab.com/ee/raketasks/backup_restore.html
 docker exec gitlab gitlab-ctl reconfigure
-sudo docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
+
+echo "Gitlab - Checking state of GITLAB container"
+echo "#################################################"
+docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
 
 # restore backup now for gitlab container
-docker cp $gitlab_archive gitlab_web_1:/var/opt/gitlab/backups
-sudo docker exec gitlab gitlab-ctl stop unicorn
-sudo docker exec gitlab gitlab-ctl stop sidekiq
-sudo docker exec gitlab chmod -R 775 /var/opt/gitlab/backups
+echo "Gitlab - loading archive of GITLAB container"
+echo "#################################################"
+docker cp $gitlab_archive gitlab:/var/opt/gitlab/backups
+docker exec gitlab gitlab-ctl stop unicorn
+docker exec gitlab gitlab-ctl stop sidekiq
+docker exec gitlab chmod -R 775 /var/opt/gitlab/backups
 
 archive_name = `echo $gitlab_archive | sed s/_gitlab_backup.tar//g`
 # note -it flag so you can respond to questions that restore script asks!
-sudo docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$archive_name
-sudo docker exec gitlab gitlab-ctl start
+docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$archive_name
+echo "Gitlab - restarting GITLAB container...."
+echo "#################################################"
+docker exec gitlab gitlab-ctl start
 
-sudo docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
+echo "Gitlab - Checking state of GITLAB container - FINAL"
+echo "#################################################"
+docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
 
 echo "#################################################"
 echo "CONTAINER: SETTING UP JENKINS"
