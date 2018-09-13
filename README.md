@@ -9,7 +9,7 @@ This repo will automatically setup a "CI/CD" environment on the laptop with: Git
 Requirements
 ------------
 
-* This solution is created for MAC OS X or  2xVM running Ubuntu or 2xVM Running Centos. 
+* This solution is created for MAC OS X or  2xVM running Ubuntu or 2xVM Running Centos.
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
 
 Ubuntu/CentOs specific requirements:
@@ -73,6 +73,8 @@ Make sure that docker and firewalld are runnning:
 
 Installing the env - pipeline tools
 -----------------------------------
+
+** YOU MUST INSTALL THE PIPELINE TOOLS FIRST **
 
 On one of the VM, we will install all the pipeline tools:
 

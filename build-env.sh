@@ -27,7 +27,8 @@ function install_minishift() {
     echo "SETTING UP MINISHIFT"
     echo "#################################################"
 
-
+    read -p 'Your VM IP: ' serverip
+    read -p 'Consul IP ' consulip
     if [[ "$unamestr" == 'Linux' ]]; then
         #echo "Linux deployment is not automated yet, please set it up yourself: https://docs.okd.io/latest/minishift/using/run-against-an-existing-machine.html#configuring-existing-remote-machine"
         mkdir minishift 
@@ -40,11 +41,11 @@ function install_minishift() {
         sudo firewall-cmd --permanent --zone minishift --add-source $dockernet
         sudo firewall-cmd --permanent --zone minishift --add-port 53/udp --add-port 8053/udp
         sudo firewall-cmd --reload
-        read -p 'Your VM IP: ' serverip
         minishift addons install --defaults
         minishift addons enable admin-user
         minishift start --vm-driver generic --remote-ipaddress $serverip --remote-ssh-user $USER --remote-ssh-key $HOME/.ssh/id_rsa --memory 4Gb
         minishift addon apply admin-user
+        rm minishift-1.23.0-linux-amd64.tgz
     elif [[ "$platform" == 'MACOSX' ]]; then
         echo "Installing Minishift on a MACOSX platform" 
         brew cask install minishift
@@ -54,6 +55,19 @@ function install_minishift() {
         minishift addon apply admin-user
         minishift start
     fi
+
+    ##
+    ## We setup minishift and create a user for API interaction
+    ## 
+    echo "#################################################"
+    echo "CONFIGURING PROJECT IN MINISHIFT"
+    echo "#################################################"
+    eval $(minishift oc-env)
+    oc login -u dev -p dev
+    oc new-project nicolas-dev
+    oc create serviceaccount robot
+    oc policy add-role-to-user admin system:serviceaccounts:test:robot
+    oc serviceaccounts get-token robot > robot-token.txt
 }
 
 function install_pipeline() 
