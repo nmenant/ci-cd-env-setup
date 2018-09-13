@@ -9,7 +9,7 @@ This repo will automatically setup a "CI/CD" environment on the laptop with: Git
 Requirements
 ------------
 
-* This solution is created for MAC OS X, a VM running Ubuntu, a VM Running Centos. If you use a VM, you'll need at least 12Gb of memory
+* This solution is created for MAC OS X or  2xVM running Ubuntu or 2xVM Running Centos. 
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
 
 Ubuntu/CentOs specific requirements:
@@ -18,8 +18,8 @@ Ubuntu/CentOs specific requirements:
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
 * Disable SELinux (a reboot is required after)
 
-Prepare the Ubuntu platform
----------------------------
+Prepare the Ubuntu platforms
+----------------------------
 
     sudo apt-get -y update
     sudo apt-get -y upgrade
@@ -42,8 +42,8 @@ Make sure that docker and firewalld are runnning:
     sudo systemctl status docker
     sudo systemctl status firewalld
 
-Prepare the CentOs platform
----------------------------
+Prepare the CentOs platforms
+----------------------------
 
 You'll need to do the following first:
 
@@ -71,24 +71,51 @@ Make sure that docker and firewalld are runnning:
     sudo systemctl status docker
     sudo systemctl status firewalld
 
-Installing the env
-------------------
+Installing the env - pipeline tools
+-----------------------------------
 
-Retrieve the github repository
+On one of the VM, we will install all the pipeline tools:
+
+* Gitlab
+* Jenkins
+* Consul
+
+To ihstall the pipeline tools, retrieve the github repository:
 
     git clone https://github.com/nmenant/ci-cd-env-setup
     cd ci-cd-env-setup
 
-Run *build-env.sh* to install the different components:
+Run *build-env.sh pipeline* to install the different components:
 
 * Update the system
-* Install Minishift in the VM. You'll be requested for the IP of the VM
 * A user-defined network (ci-cd-docker-net) in docker will be created (172.18.0.0/16)
 * Gitlab will run on 172.18.0.2
 * Jenkins will run on 172.18.0.3
 * Consul will run on 172.18.0.4
 
 Everything will be started at the same time
+
+Installing the env - minishift
+-----------------------------------
+
+On this VM, we will install minishift
+
+To ihstall minishift, retrieve the github repository:
+
+    git clone https://github.com/nmenant/ci-cd-env-setup
+    cd ci-cd-env-setup
+
+Run *build-env.sh minishift* to install minishift:
+
+* Update the system
+* Install Minishift in the VM. You'll be requested for the IP of the VM
+
+minishift will be started at the same time. Its GUI will be available on <https://IP:8443/console>
+
+login by default with:
+
+* Login: dev
+* Password: dev
 
 Start the environment
 ---------------------

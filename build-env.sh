@@ -18,11 +18,6 @@ function error_syntax () {
 }
 
 function install_minishift() {
-    echo "##############INSTALLING MINISHIFT###################"
-    ##
-    ## SETUP MINISHIFT
-    ##
-
     ##
     ## Need to identify the platform to make sure we can install Minishift
     ## installation guide is here: ## update accordingly:  https://docs.okd.io/latest/minishift/getting-started/installing.html
@@ -164,6 +159,14 @@ function install_pipeline()
     ## Launch consul container
     docker rm consul
     sh consul/setup-consul.sh $PWD
+
+    echo "#################################################"
+    echo "CONTAINER: Cleaning up folder"
+    echo "#################################################"
+    rm jenkins.tgz
+    rm consul.tgz
+    rm $gitlab_archive
+
 }
 
 if [ "$#" -ne 1 ]; then
