@@ -190,5 +190,3 @@ Update those values accordingly to your infrastructure
     PUT http://127.0.0.1:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
 
     192.168.143.13
-
-CHANGE IP FOR GITLAB REPO ON Service-definition in the WEBAPP REPO So that it works
