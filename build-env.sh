@@ -84,7 +84,7 @@ function install_minishift() {
     echo "#################################################"
     echo "CONFIGURING CONSUL - Update BIG-IP IP Address"
     echo "#################################################"
-    curl -X PUT -d $bigipip http://$consulip:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips" 
+    curl -X PUT -d $bigipip http://$consulip:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
 }
 
 function install_pipeline() 
