@@ -28,7 +28,8 @@ function install_minishift() {
     echo "#################################################"
 
     read -p 'Your VM IP: ' serverip
-    read -p 'Consul IP ' consulip
+    read -p 'Consul IP: ' consulip
+    read -p 'BIG-IP IP: ' bigipip
     if [[ "$unamestr" == 'Linux' ]]; then
         #echo "Linux deployment is not automated yet, please set it up yourself: https://docs.okd.io/latest/minishift/using/run-against-an-existing-machine.html#configuring-existing-remote-machine"
         mkdir minishift 
@@ -67,7 +68,23 @@ function install_minishift() {
     oc new-project nicolas-dev
     oc create serviceaccount robot
     oc policy add-role-to-user admin system:serviceaccounts:test:robot
-    oc serviceaccounts get-token robot > robot-token.txt
+    oc serviceaccounts get-token robot > robot-token.json
+    ##
+    ## We update Consul based on our Minishift Setup
+    ## 
+    echo "#################################################"
+    echo "CONFIGURING CONSUL - Update Minishift keys"
+    echo "#################################################"
+    curl -X PUT -d @robot-token.json http://$consulip:8500/v1/kv/Minishift/minishift_token 
+    curl -X PUT -d $serverip  http://$consulip:8500/v1/kv/Minishift/minishift_ip 
+
+    ##
+    ## We update Consul based on our Minishift Setup
+    ## 
+    echo "#################################################"
+    echo "CONFIGURING CONSUL - Update BIG-IP IP Address"
+    echo "#################################################"
+    curl -X PUT -d $bigipip http://$consulip:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips" 
 }
 
 function install_pipeline() 
