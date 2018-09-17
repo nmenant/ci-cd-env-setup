@@ -67,8 +67,8 @@ function install_minishift() {
     oc login -u dev -p dev
     oc new-project nicolas-dev
     oc create serviceaccount robot
-    oc policy add-role-to-user admin system:serviceaccounts:test:robot
-    oc serviceaccounts get-token robot > robot-token.json
+    oc policy add-role-to-user admin system:serviceaccount:test:robot
+    oc serviceaccount get-token robot > robot-token.json
     ##
     ## We update Consul based on our Minishift Setup
     ## 
@@ -145,15 +145,18 @@ function install_pipeline()
     # We start working on restoring the archive 
     # https://gitlab.com/gitlab-org/gitlab-ce/issues/14740
     # https://docs.gitlab.com/ee/raketasks/backup_restore.html
+    echo "#################################################"
     echo "Gitlab - Reconfigure GITLAB container"
     echo "#################################################"
     docker exec gitlab gitlab-ctl reconfigure
 
+    echo "#################################################"
     echo "Gitlab - Checking state of GITLAB container"
     echo "#################################################"
     docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
 
     # restore backup now for gitlab container
+    echo "#################################################"
     echo "Gitlab - loading archive of GITLAB container"
     echo "#################################################"
     docker cp $gitlab_archive gitlab:/var/opt/gitlab/backups
@@ -164,10 +167,12 @@ function install_pipeline()
     archive_name = `echo $gitlab_archive | sed s/_gitlab_backup.tar//g`
     # note -it flag so you can respond to questions that restore script asks!
     docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$archive_name
+    echo "#################################################"
     echo "Gitlab - restarting GITLAB container...."
     echo "#################################################"
     docker exec gitlab gitlab-ctl start
 
+    echo "#################################################"
     echo "Gitlab - Checking state of GITLAB container - FINAL"
     echo "#################################################"
     docker exec gitlab gitlab-rake gitlab:check SANITIZE=true
