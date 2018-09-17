@@ -110,25 +110,54 @@ To ihstall minishift, retrieve the github repository:
 Run *build-env.sh minishift* to install minishift:
 
 * Update the system
-* Install Minishift in the VM. You'll be requested for the IP of the VM
+* Install Minishift in the VM. You'll be requested for the IP of this VM, the IP of the VM running the pipeline tools and the IP of the BIG-IP
+    Consider that the credentials are *admin*/*admin* to it - if not, you need to update the Consul KV for BIG-IP credentials - see below)
 
-minishift will be started at the same time. Its GUI will be available on <https://IP:8443/console>
+Once minishift started, its GUI will be available on <https://IP:8443/console>
 
 login by default with:
 
 * Login: dev
 * Password: dev
 
+Finalize the setup
+------------------
+
+There is one last step to do to finalize your setup: update the service definition tied to the demo app.
+
+To update the service definition, you may go to your gitlab <http://IP:1080/nicolas/my-webapp-ci-cd-demo/blob/dev/my-adc-cluster/service-definition.json>
+
+You need to edit this file to change the URI of the security policy.
+
+change the following line to replace *192.168.143.1* with the IP of your VM running Gitlab:
+
+     "url": "http://192.168.143.1:1080/Larry/Security-Policies/raw/master/policies/asm-policy-linux-high.xml",
+
+This will trigger a webhook in Jenkins but it's irrelevant, it won't be processed
+
+Trigger a deployment/Delete the app
+-----------------------------------
+
+To deploy/delete the App, it is fairly straightforward. You need to add/delete the "DELETE" file at the repo of the repo *my-webapp-ci-cd-demo*.
+Don't forget to go to the Dev branch.
+
+By default this file exist. You just need to delete it from the repo and the app will be deployed.
+
+If you want to remove the App, you just need to put back a DELETE file at the root of the directory.
+
 Start the environment
 ---------------------
 
-Run *start-env.sh* to start the environment.
+To start the environment, run the following commands on the pipeline tools VM:
 
-Gitlab will be available at: <http://127.0.0.1:1080/> (admin access- root, password: Pa55w0rd)
-Jenkins will be available at: <http://127.0.0.1:1180/> (admin access- login: admin, password: Pa55w0rd)
-Consul KV will be available at: <http://172.0.0.1:8500/>
+    docker start gitlab
+    docker start jenkins
+    docker start consul
 
-to identify the IP used by minishift, run the command *minishift ip*
+Run the following command on the minishift VM:
+
+    minishift start
+    eval $(minishift oc-env)
 
 Update Consul
 -------------
@@ -161,3 +190,5 @@ Update those values accordingly to your infrastructure
     PUT http://127.0.0.1:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
 
     192.168.143.13
+
+CHANGE IP FOR GITLAB REPO ON Service-definition in the WEBAPP REPO So that it works
