@@ -1,47 +1,19 @@
 SETUP CI CD ENV
 ===============
 
-!!WARNING!! This is work in progress. Those scripts will works but the docker volumes have not been
-    transfered YET on this repo
-
 This repo will automatically setup a "CI/CD" environment on the laptop with: Gitlab, Jenkins, Consul, Minishift and some default pipeline/examples
 
 Requirements
 ------------
 
-* This solution is created for MAC OS X or  2xVM running Ubuntu or 2xVM Running Centos.
+* This solution is created for MAC OS X or 2xVM Running Centos.
 * AS3 must be installed on the BIG-IP devices used <https://github.com/F5Networks/f5-appsvcs-extension/releases>
 
-Ubuntu/CentOs specific requirements:
+CentOs specific requirements:
 
 * The user must be allowed to do sudo commands without password (use *sudo visudo* and add a line like *USERNAME ALL=(ALL)       NOPASSWD: ALL*)                         (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
 * Disable SELinux (a reboot is required after)
-
-Prepare the Ubuntu platforms
-----------------------------
-
-    sudo apt-get -y update
-    sudo apt-get -y upgrade
-    sudo apt install -y git software-properties-common net-tools firewalld wget
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-    sudo apt-get update
-    apt-cache policy docker-ce
-    sudo apt-get install -y docker-ce
-    sudo systemctl start docker
-    sudo systemctl enable docker
-    # Allow the user to run docker command without sudo - needed for Minishift
-    sudo groupadd docker
-    sudo usermod -aG docker $USER
-
-Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
-into account until a restart is done.
-
-Make sure that docker and firewalld are runnning:
-
-    sudo systemctl status docker
-    sudo systemctl status firewalld
 
 Prepare the CentOs platforms
 ----------------------------
@@ -139,7 +111,7 @@ This will trigger a webhook in Jenkins but it's irrelevant, it won't be processe
 Trigger a deployment/Delete the app
 -----------------------------------
 
-To deploy/delete the App, it is fairly straightforward. You need to add/delete the "DELETE" file at the repo of the repo *my-webapp-ci-cd-demo*.
+To deploy/delete the App, it is fairly straightforward. You need to add/delete the "DELETE" file in the repo *my-webapp-ci-cd-demo*.
 Don't forget to go to the Dev branch.
 
 By default this file exist. You just need to delete it from the repo and the app will be deployed.
