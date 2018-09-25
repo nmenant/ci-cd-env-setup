@@ -67,7 +67,7 @@ function install_minishift() {
     oc login -u dev -p dev
     oc new-project nicolas-dev
     oc create serviceaccount robot
-    oc policy add-role-to-user admin system:serviceaccount:test:robot
+    oc policy add-role-to-user admin system:serviceaccount:nicolas-dev:robot
     oc serviceaccount get-token robot > robot-token.json
     ##
     ## We update Consul based on our Minishift Setup
