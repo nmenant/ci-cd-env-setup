@@ -3,7 +3,7 @@
 ## We consider two scenarios: 
 ## 1- you use a MAC and want to install it on your laptop
 ##      If you use a MAC, we consider that you already have brew and docker installed
-## 2- you want to use a VM to do this and use Ubuntu (16.04+) or Centos 7
+## 2- you want to use a VM to do this, use Centos 7
 ##      Follow the README guide to check the pre requisites
 ## Any other deployment is not supported today
 ## 
@@ -13,7 +13,7 @@ function error_syntax () {
     echo "Syntax for build-env.sh: "
     echo "  ./build-env.sh minishift: will install minishift and update consul accordingly"
     echo "  ./build-env.sh pipeline: will install gitlab, jenkins, consul"
-    echo "You cannot run minishift and pipeline on the same VM (except on MAC)"
+    echo "You cannot run minishift and pipeline on the same VM (except if set this up on your MAC)"
     echo "#################################"
 }
 
@@ -230,8 +230,8 @@ if  [ "$1" == "minishift" ] | [ "$1" == "pipeline" ]; then
     echo "Updating the platform"
     echo "#################################################"
     if [[ "$platform" == 'Ubuntu' ]]; then
-        sudo apt-get -y update
-        sudo apt-get -y upgrade 
+        echo "Ubuntu is not support, Only CentOs is supported as a platform"
+        echo -1
     elif [[ "$platform" == 'Darwin' ]]; then
         brew update
     elif [[ "$platform" == 'CentOS' ]]; then
