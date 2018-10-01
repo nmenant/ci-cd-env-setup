@@ -65,10 +65,10 @@ function install_minishift() {
     echo "#################################################"
     eval $(minishift oc-env)
     oc login -u dev -p dev
-    oc new-project nicolas-dev
+    oc new-project tenanta-dev
     oc create serviceaccount robot
-    oc policy add-role-to-user admin system:serviceaccount:nicolas-dev:robot
-    oc serviceaccount get-token robot > robot-token.json
+    oc policy add-role-to-user admin system:serviceaccount:tenanta-dev:robot
+    oc serviceaccounts get-token robot > robot-token.json
     ##
     ## We update Consul based on our Minishift Setup
     ## 
@@ -84,13 +84,13 @@ function install_minishift() {
     echo "#################################################"
     echo "CONFIGURING CONSUL - Update BIG-IP IP Address"
     echo "#################################################"
-    curl -X PUT -d $bigipip http://$consulip:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
+    curl -X PUT -d $bigipip http://$consulip:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
 }
 
 function install_pipeline() 
 {
     echo "##############INSTALLING PIPELINE###################"
-    gitlab_archive='1536226517_2018_09_06_11.2.3_gitlab_backup.tar'
+    gitlab_archive='1538386497_2018_10_01_11.2.3_gitlab_backup.tar'
 
     ##
     ## Retrieve the containers' volumes/backups from AWS S3
