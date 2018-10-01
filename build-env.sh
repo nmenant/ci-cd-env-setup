@@ -69,6 +69,8 @@ function install_minishift() {
     oc create serviceaccount robot
     oc policy add-role-to-user admin system:serviceaccount:tenanta-dev:robot
     oc serviceaccounts get-token robot > robot-token.json
+    echo "Robot API Token:"
+    cat robot-token.json
     ##
     ## We update Consul based on our Minishift Setup
     ## 
