@@ -93,12 +93,22 @@ login by default with:
 * Login: dev
 * Password: dev
 
+Credentials
+-----------
+
+Here is the list of login/password for the different tools:
+
+* Gitlab: TenantA/Pa55w0rd
+* Jenkins: TenantA/Pa55w0rd
+* Minishift: dev/dev
+* Consul: no auth needed to handle the kv database
+
 Finalize the setup
 ------------------
 
 There is one last step to do to finalize your setup: update the service definition tied to the demo app.
 
-To update the service definition, you may go to your gitlab <http://IP:1080/nicolas/my-webapp-ci-cd-demo/blob/dev/my-adc-cluster/service-definition.json>
+To update the service definition, you may go to your gitlab <http://IP:1080/tenanta/my-webapp-ci-cd-demo/blob/dev/my-adc-cluster/service-definition.json>
 
 You need to edit this file to change the URI of the security policy.
 
@@ -143,8 +153,8 @@ Consul can be used to store infrastructure information leveraged by Jenkins. By 
     "Minishift/minishift_ip",
     "Minishift/minishift_port",
     "Minishift/minishift_token",
-    "nicolas/ADC-Services/cluster-nicolas/cluster_credentials",
-    "nicolas/ADC-Services/cluster-nicolas/cluster_ips"
+    "tenanta/ADC-Services/cluster-nicolas/cluster_credentials",
+    "tenanta/ADC-Services/cluster-nicolas/cluster_ips"
     ]
 
 They are used in the 2 default jenkins pipeline. You still need to update a few variables based on your env:
@@ -157,9 +167,9 @@ They are used in the 2 default jenkins pipeline. You still need to update a few 
 Update those values accordingly to your infrastructure
 
     To check a key value:
-    GET http://127.0.0.1:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
+    GET http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
 
     To update the value of a key:
-    PUT http://127.0.0.1:8500/v1/kv/nicolas/ADC-Services/cluster-nicolas/cluster_ips
+    PUT http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
 
     192.168.143.13
