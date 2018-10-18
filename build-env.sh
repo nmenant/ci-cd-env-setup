@@ -30,6 +30,7 @@ function install_minishift() {
     read -p 'Your VM IP: ' serverip
     read -p 'Consul IP: ' consulip
     read -p 'BIG-IP IP: ' bigipip
+    read -p 'BIG-IP Admin Port': bigipport
     if [[ "$unamestr" == 'Linux' ]]; then
         #echo "Linux deployment is not automated yet, please set it up yourself: https://docs.okd.io/latest/minishift/using/run-against-an-existing-machine.html#configuring-existing-remote-machine"
         mkdir minishift 
@@ -69,6 +70,8 @@ function install_minishift() {
     oc create serviceaccount robot
     oc policy add-role-to-user admin system:serviceaccount:tenanta-dev:robot
     oc serviceaccounts get-token robot > robot-token.json
+    echo "Robot API Token:"
+    cat robot-token.json
     ##
     ## We update Consul based on our Minishift Setup
     ## 
@@ -82,9 +85,10 @@ function install_minishift() {
     ## We update Consul based on our Minishift Setup
     ## 
     echo "#################################################"
-    echo "CONFIGURING CONSUL - Update BIG-IP IP Address"
+    echo "CONFIGURING CONSUL - Update BIG-IP IP Address/port"
     echo "#################################################"
     curl -X PUT -d $bigipip http://$consulip:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
+    curl -X PUT -d $bigipport http://$consulip:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_port
 }
 
 function install_pipeline() 
