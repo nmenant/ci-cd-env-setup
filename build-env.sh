@@ -168,7 +168,7 @@ function install_pipeline()
     docker exec gitlab gitlab-ctl stop sidekiq
     docker exec gitlab chmod -R 775 /var/opt/gitlab/backups
 
-    archive_name = `echo $gitlab_archive | sed s/_gitlab_backup.tar//g`
+    archive_name=`echo $gitlab_archive | sed s/_gitlab_backup.tar//g`
     # note -it flag so you can respond to questions that restore script asks!
     docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$archive_name
     echo "#################################################"
