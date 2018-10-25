@@ -94,7 +94,7 @@ function install_minishift() {
 function install_pipeline() 
 {
     echo "##############INSTALLING PIPELINE###################"
-    gitlab_archive='1538386497_2018_10_01_11.2.3_gitlab_backup.tar'
+    gitlab_archive='1540482516_2018_10_25_11.2.3_gitlab_backup.tar'
 
     ##
     ## Retrieve the containers' volumes/backups from AWS S3
