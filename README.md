@@ -130,7 +130,8 @@ Trigger a deployment/Delete the app
 -----------------------------------
 
 To deploy/delete the App, it is fairly straightforward. You need to add/delete the "DELETE" file in the repo *my-webapp-ci-cd-demo*.
-Don't forget to go to the Dev branch.
+
+..note:: **Don't forget to go to the Dev branch!!!**
 
 By default this file exist. You just need to delete it from the repo and the app will be deployed.
 
