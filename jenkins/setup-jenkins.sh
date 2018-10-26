@@ -3,7 +3,7 @@
 docker build -t jenkins-with-python-docker jenkins/
 
 docker run \
-    -d -v /var/run/docker.sock:/var/run/docker.sock \
+    -d --restart always  -v /var/run/docker.sock:/var/run/docker.sock \
     -v $2:/usr/bin/docker \
     -v $1/docker_volumes/jenkins:/var/jenkins_home \
     -p 1180:8080 \
