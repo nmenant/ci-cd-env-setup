@@ -136,19 +136,15 @@ By default this file exist. You just need to delete it from the repo and the app
 
 If you want to remove the App, you just need to put back a DELETE file at the root of the directory.
 
-Start the environment
----------------------
+UDF - Restart the environment
+-----------------------------
 
-To start the environment, run the following commands on the pipeline tools VM:
+If you switch off/pause off your VMs, you'll need to restart some of your components:
 
-    docker start gitlab
-    docker start jenkins
-    docker start consul
+* the gitlab/jenkins/consul containers should restart automatically since they have been started with the option *--restart always*
+* You'll need to start again minishift. To do this, just run again the command
 
-Run the following command on the minishift VM:
-
-    minishift start
-    eval $(minishift oc-env)
+    ./build-env.sh minishift
 
 Update Consul
 -------------
