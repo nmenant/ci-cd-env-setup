@@ -75,7 +75,7 @@ Installing the env - minishift
 
 On this VM, we will install minishift
 
-To ihstall minishift, retrieve the github repository:
+To install minishift, retrieve the github repository:
 
     git clone https://github.com/nmenant/ci-cd-env-setup
     cd ci-cd-env-setup
@@ -142,9 +142,9 @@ UDF - Restart the environment
 If you switch off/pause off your VMs, you'll need to restart some of your components:
 
 * the gitlab/jenkins/consul containers should restart automatically since they have been started with the option *--restart always*
-* You'll need to start again minishift. To do this, just run again the command
+* You'll need to start again minishift. To do this, just run again the command in the *ci-cd-env-setup* folder
 
-    ./build-env.sh minishift
+    build-env.sh minishift
 
 Update Consul
 -------------
