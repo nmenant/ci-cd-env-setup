@@ -7,7 +7,7 @@
 gitlab_version=`echo $2 | cut -d'_' -f 5`
 
 docker run \
-    -d -v $1/docker_volumes/gitlab/data:/var/opt/gitlab \
+    -d --restart always  -v $1/docker_volumes/gitlab/data:/var/opt/gitlab \
     -v $1/docker_volumes/gitlab/logs:/var/log/gitlab \
     -v $1/docker_volumes/gitlab/config:/etc/gitlab \
     -p 1022:22 \
