@@ -110,7 +110,15 @@ There is one last step to do to finalize your setup: update the service definiti
 
 To update the service definition, you may go to your gitlab <http://IP:1080/tenanta/my-webapp-ci-cd-demo/blob/dev/my-adc-cluster/service-definition.json>
 
-You need to edit this file to change the URI of the security policy.
+You need to edit this file to change :
+
+* the Virtual Server IP Address of the service.
+
+    "virtualAddresses": [
+        "172.16.1.90"
+    ],
+
+* the URI of the security policy.
 
 change the following line to replace *192.168.143.1* with the IP of your VM running Gitlab:
 
