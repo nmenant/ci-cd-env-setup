@@ -3,7 +3,7 @@ Review Gitlab setup
 We have setup the following in GitLab: 
 
 * A Tenant/User called **TenantA**. It host all the applications and adc services tied to this tenant.
-    You can have multiple applications owned by this user and multiple BIG-IP/ADC services here. 
+  You can have multiple applications owned by this user and multiple BIG-IP/ADC services here. 
 * For this demo, we will use two different repos in **TenantA**: *my-webapp-ci-cd-demo* and *ADC-Services* 
 
 Connect to your Gitlab. It should be http://<IP of your VM>:1080/
@@ -35,11 +35,11 @@ Once you've selected the *dev* branch, you should see different folders in the *
     :scale: 50%
  
 * jenkins: This is folder that will be consumed by the CI Server. It contains all the right scripts to process this folder and 
-    do the app deployment, update the ADC-services repo, ...
+  do the app deployment, update the ADC-services repo, ...
 * my-adc-cluster: this folder will contain the ADC target to host our ADC service. It contains the name of the targetted cluster
-    and the ADC service to deploy on it. Consul will provide us with all the right information related to it: BIG-IP IPs, credentials, ...
+  and the ADC service to deploy on it. Consul will provide us with all the right information related to it: BIG-IP IPs, credentials, ...
 * my-app-definition: this folder contains the app definition. It contains files that we will use to deploy the app on Openshift: 
-    deployment, services, route
+  deployment, services, route
 * test: this folder contains multiple tests to do against the app to ensure it is up and running as expected. 
 
 
