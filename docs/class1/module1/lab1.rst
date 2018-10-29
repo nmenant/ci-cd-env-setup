@@ -11,7 +11,7 @@ Connect to your Gitlab. It should be http://<IP of your VM>:1080/
 * Login: TenantA
 * Password: Pa55w0rd
 
-.. image:: ../../_static/class1/module1/001.png
+.. image:: ../../_static/class1/module1/img001.png
     :align: center
     :scale: 50%
 
@@ -30,7 +30,7 @@ Gitlab setup - my-webapp-ci-cd-demo
 
 Once you've selected the *dev* branch, you should see different folders in the **my-webapp-ci-cd-demo** repo. 
 
-.. image:: ../../_static/class1/module1/001.png
+.. image:: ../../_static/class1/module1/img002.png
     :align: center
     :scale: 50%
  
@@ -53,7 +53,7 @@ in this file and it will execute scripts in the jenkins folder
 
 Every time this repo is updated, it will trigger an already defined *WebHook*. This *WebHook* will trigger a pipeline on the Jenkins server
 
-.. image:: ../../_static/class1/module1/003.png
+.. image:: ../../_static/class1/module1/img003.png
     :align: center
     :scale: 50%
  
