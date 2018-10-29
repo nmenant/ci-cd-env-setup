@@ -2,12 +2,15 @@
 Class 1 - demo IaC with CI/CD Tools
 ***********************************
 
+This class will teach you how to do Infrastructure as Code (IaC) with F5 solutions. 
 
-This class will teach you how to create F5 iControl REST API extensions. If you
-are NOT familiar with the iControl REST API, here are the labs you are looking
-for the `Introduction to Automation & Orchestration
-<http://clouddocs.f5.com/training/community/programmability/html/class1/class1.html>`_
-Course.
+In this lab, we have setup different DevOps tools to do the demonstration: 
+
+* Gitlab: It will host our applications and services definition
+* Jenkins: it will be our CI Server
+* Consul: it will be used to store *secrets* and infrastructure information like BIG-IP IP, ...
+* Openshift: We will use Minishift to host our deployed applications 
+* AS3: We will leverage the AS3 extension to be able to consume a declarative interface for services instantiation 
 
 
 .. toctree::
