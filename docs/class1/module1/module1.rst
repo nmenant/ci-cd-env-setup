@@ -14,8 +14,6 @@ To do this demo, we need to get a proper understanding of the setup.
 
 **Exercises in this Module**
 
-- Lab 1 - Review Gitlab setup
-
 .. toctree::
    :maxdepth: 1
    :glob:
