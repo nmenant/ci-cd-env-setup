@@ -1,6 +1,8 @@
 Deploy a new Application
 ------------------------
 
+Prepare the demo
+^^^^^^^^^^^^^^^^
 Here is the recommended worklow to do this demo. 
 
 Open different tabs in your browser: 
@@ -8,15 +10,38 @@ Open different tabs in your browser:
 * Open 2 *GitLab* tabs: one for the **my-webapp-ci-cd-demo** repo and the other one for the 
   **ADC-Services** repo. **don't forget to go to the DEV branch**. 
 * Open 2 *Jenkins* tabs: one for the **my-webapp-ci-cd-demo-dev** project and the other one 
-  for the **adc-services-dev** project 
+  for the **adc-services-dev** project. **don't forget to go to the DEV branch**. 
 * Open 1 tab on your BIG-IP to show its configuration (highlight that there is no *tenanta-dev* partition
-* Open 1 tab on your minishift deployment (*login*: dev, *password*: dev). Go in the 
+* Open 1 tab on your minishift deployment (*login*: dev, *password*: dev). Go in the *tenanta-dev* project
 
 Make sure that: 
 
 * the *DELETE* file exists in the **my-webapp-ci-cd-demo** repo. 
+* the *cluster-nicolas* folder in the **ADC-Services** repo should be empty except for an *OWNER* file. 
 * Your BIG-IP configuration doesn't have a *tenanta-dev* partition
 * You don't have any App deployed in your minishift system in the tenanta-dev project. 
+
+.. image:: ../../_static/class1/module1/img002.png
+    :align: center
+    :scale: 30%
+
+.. image:: ../../_static/class1/module1/img007.png
+    :align: center
+    :scale: 30%
+
+.. image:: ../../_static/class1/module1/img008.png
+    :align: center
+    :scale: 30%
+
+.. image:: ../../_static/class1/module1/img009.png
+    :align: center
+    :scale: 30%
+
+
+
+
+Trigger the app deployment
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this demo, we use the *DELETE* file to leverage either the APP deployment, or its removal. 
 
