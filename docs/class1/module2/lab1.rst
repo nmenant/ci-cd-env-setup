@@ -15,6 +15,24 @@ Open different tabs in your browser:
 * Open 1 tab on your BIG-IP to show its configuration (highlight that there is no *tenanta-dev* partition
 * Open 1 tab on your minishift deployment (*login*: dev, *password*: dev). Go in the *tenanta-dev* project
 
+.. WARNING:: if you use F5 private cloud UDF, make sure minishift is up and running. If it's not, check the 
+    steps mentioned in the documentation of the blueprint/deployment. You likely need to run again: 
+    
+    :: 
+    
+        /home/centos/ci-cd-env-setup/build-env.sh minishift 
+
+    if it doesn't work, you can try the following: 
+
+    :: 
+
+        cd /home/centos/ci-cd-env-setup
+        minishift stop
+        minishift delete 
+        rm -rf minishift
+        ./build-env.sh minishift
+
+
 Make sure that: 
 
 * the *DELETE* file exists in the **my-webapp-ci-cd-demo** repo. 
