@@ -165,7 +165,52 @@ You'll see two files:
 * tests.json: we also copied the *tests* file from the application repo since we want to make sure the same tests 
   will behave in an identical manner through the ADC
 
+We can review the *commit* that was done by the *CI server* *Jenkins* by click on the *commit* menu
+
+.. image:: ../../_static/class1/module2/img021.png
+    :align: center
+    :scale: 30%
+
+Here we can see that the commit message provide some useful information that will be used later: the application name and 
+which BIG-IP cluster has been targetted for this new ADC service. 
+
+Since we updated the **ADC-Services** repo, it also triggered a *WebHook* to the *CI Server* *Jenkins*. Go to your 
+other tab on *Jenkins* related to the project called **adc-services-dev**. You will see that a *build* has also 
+been triggered: 
+
 .. image:: ../../_static/class1/module2/img013.png
     :align: center
     :scale: 30%
 
+Here are the different steps of this build: 
+
+* *Build AS3 Declaration*: We identify which cluster has been updated based on the commit log that we reviewed previously. 
+  We will parse all the application folders in the relevant BIG-IP cluster to create a single AS3 declaration for the whole
+  tenant. The AS3 tenant name will be based on the *Gitlab* tenant (ie TenantA) and the related branch (*dev*)
+* *Test AS3 Declaration*: we do a *dry run* of the AS3 declaration to make sure no errors, mistakes are identified
+* *Deploy AS3 Declaration*: if the previous *dry run* is successful, we *deploy* this time the AS3 declaration
+* *Test ADC and App*: We run the different tests against the updated BIG-IP to ensure all the tests still behave as expected
+
+If everything is processed properly, the whole build line should be green as you may see on the picture above.
+
+You can go to your BIG-IP tab, to see if a new application service has been deployed: 
+
+* Select the partition *tenanta-dev*
+* check the virtual server and its status. The name of the VS will be the name of the application to which we appended the branch name
+
+.. image:: ../../_static/class1/module2/img022.png
+    :align: center
+    :scale: 30%
+
+You can try to reach the application through the BIG-IP now. Be aware that you'll need to either: 
+
+* update your hosts file to add the minishift/openshift FQDN of the app and tie it to your virtual server IP
+* use the IP but you need to enforce a *Host header* with the right fqdn 
+
+This is because Openshift/Minishift route based on the FQDN of the app. 
+
+.. image:: ../../_static/class1/module2/img017.png
+    :align: center
+    :scale: 30%
+
+In this example, the FQDN to use is : my-frontend-route-tenanta-dev.192.168.143.212.nip.io
