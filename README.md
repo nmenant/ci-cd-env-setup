@@ -137,6 +137,8 @@ By default this file exist. You just need to delete it from the repo and the app
 
 If you want to remove the App, you just need to put back a DELETE file at the root of the directory.
 
+you have a more detailed lab guide here: <https://f5-ci-cd-lab.readthedocs.io/en/master/class1/module2/module2.html>
+
 UDF - Restart the environment
 -----------------------------
 
