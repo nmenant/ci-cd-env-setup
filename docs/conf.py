@@ -28,6 +28,13 @@ version = u''
 # The full version, including alpha/beta/rc tags
 release = u'0.9'
 
+import os
+import sys
+import time
+import re
+import pkgutil
+import string
+sys.path.insert(0, os.path.abspath('.'))
 
 # -- General configuration ---------------------------------------------------
 
@@ -74,7 +81,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -154,6 +161,3 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-import f5_sphinx_theme
-html_theme = 'f5_sphinx_theme'
-html_sidebars = {'**': ['searchbox.html', 'localtoc.html', 'globaltoc.html']}
