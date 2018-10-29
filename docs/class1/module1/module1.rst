@@ -1,7 +1,8 @@
 Module 1 - Review the setup 
 ===========================
 
-In this module, we will show you how to do a demo of IaC with F5 solutions: 
+In this module, we will show you how to do a demo of IaC (*Infrastructure as Code*) 
+with F5 solutions: 
 
 * We will use GitLab to host our application definition and 
   also services tied to it : ADC and Web Application Firewall services
@@ -11,7 +12,7 @@ In this module, we will show you how to do a demo of IaC with F5 solutions:
 
 To do this demo, we need to get a proper understanding of the setup. 
 
-
+Through Module1, you'll review the overall setup and be able to trigger a demo of IaC
 
 **Exercises in this Module**
 

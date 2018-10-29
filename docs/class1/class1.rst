@@ -10,7 +10,12 @@ In this lab, we have setup different DevOps tools to do the demonstration:
 * Jenkins: it will be our CI Server
 * Consul: it will be used to store *secrets* and infrastructure information like BIG-IP IP, ...
 * Openshift: We will use Minishift to host our deployed applications 
-* AS3: We will leverage the AS3 extension to be able to consume a declarative interface for services instantiation 
+* AS3: We will leverage the AS3 extension to be able to consume a declarative interface for 
+  services instantiation. To know more about AS3, please visit AS3_. 
+
+  .. _AS3: https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/3/
+
+  
 
 
 .. toctree::

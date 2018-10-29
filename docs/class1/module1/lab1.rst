@@ -1,5 +1,6 @@
 Review Gitlab setup
 -------------------
+
 We have setup the following in GitLab: 
 
 * A Tenant/User called **TenantA**. It host all the applications and adc services tied to this tenant.
@@ -43,15 +44,20 @@ Once you've selected the *dev* branch, you should see different folders in the *
 * test: this folder contains multiple tests to do against the app to ensure it is up and running as expected. 
 
 
-.. note:: it is worth highlighting that the ADC service definition is based on the AS3 schema but only contains the service definition! 
-    not the full tenant definition needed by **AS3**. The whole **AS3** declaration for this tenant is within the **ADC-Services** repo that we will
+.. note:: it is worth highlighting that the ADC service definition is based on the AS3 schema 
+    but only contains the service definition! not the full tenant definition needed by **AS3**. 
+    The whole **AS3** declaration for this tenant is within the **ADC-Services** repo that we will
     review later. 
 
-There is also an important file at the root of the repo: *jenkinsFile*. When you trigger a webhook from GitLab to Jenkins, the first
-thing Jenkins will do it retrieve this repo. From here, it will process the jenkinsFile to know what to do. The whole pipeline is defined 
+There is also an important file at the root of the repo: *jenkinsFile*. 
+When you trigger a webhook from GitLab to Jenkins, the first thing Jenkins will do is to
+retrieve this repo. 
+From here, it will process the jenkinsFile to know what to do.  The whole pipeline is defined 
 in this file and it will execute scripts in the jenkins folder
 
-Every time this repo is updated, it will trigger an already defined *WebHook*. This *WebHook* will trigger a pipeline on the Jenkins server
+Every time this repo is updated, it will trigger an already defined *WebHook*. 
+This *WebHook* will trigger a pipeline on the Jenkins server. In your **my-webapp-ci-cd-demo** repo,
+Go to *Setting* > *Integration* to review the WebHook defined. 
 
 .. image:: ../../_static/class1/module1/img003.png
     :align: center
@@ -61,3 +67,21 @@ You can learn more about *WebHooks* here: WebHooks_.
 
 .. _WebHooks: https://docs.gitlab.com/ee/user/project/integrations/webhooks.html
 
+Here you can see that *GitLab* is setup to send a "signal" to:
+
+.. code::
+
+    http://172.18.0.3:8080/project/my-webapp-ci-cd-demo-dev
+
+172.18.0.3 is the IP Address of our container running *Jenkins*. The URI: */project/my-webapp-ci-cd-demo-dev* 
+defines a project defined on *Jenkins*. This is our pipeline. 
+
+This specific pipeline will be triggered every time we update our **my-webapp-ci-cd-demo** repo.
+
+.. note:: There is a file called *DELETE* at the root of the **my-webapp-ci-cd-demo** repo. This file 
+    is needed to do the IaC demo. We will explain this in lab3. 
+
+    .. image:: ../../_static/class1/module1/img004.png
+        :align: center
+        :scale: 30%
+ 
