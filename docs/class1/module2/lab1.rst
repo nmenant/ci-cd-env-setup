@@ -1,4 +1,4 @@
-Deploy a new Application
+Deploy a new application
 ------------------------
 
 Prepare the demo
