@@ -28,7 +28,7 @@ Here is the workflow of the solution:
   * deploy the app based on its definition
   * test that the app is up and running based on the tests defined in the repo
   * review the *ADC services* definition in the repo and ensure its fine. 
-  * Update another repo called **ADC-Services** to add this new service definition 
+  * Update another repo called **ADC-Services** to add its ADC service definition and the tests to validate its proper deployment
 
 #. Since we updated our **ADC-Services** repo on *GitLab*, it will also send a *WebHook* to *Jenkins* to trigger another *pipeline*
 

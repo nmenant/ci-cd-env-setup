@@ -3,6 +3,7 @@ Deploy a new Application
 
 Prepare the demo
 ^^^^^^^^^^^^^^^^
+
 Here is the recommended worklow to do this demo. 
 
 Open different tabs in your browser: 
@@ -21,54 +22,150 @@ Make sure that:
 * Your BIG-IP configuration doesn't have a *tenanta-dev* partition
 * You don't have any App deployed in your minishift system in the tenanta-dev project. 
 
-.. image:: ../../_static/class1/module1/img002.png
+.. image:: ../../_static/class1/module2/img002.png
     :align: center
     :scale: 30%
 
-.. image:: ../../_static/class1/module1/img007.png
+|
+
+.. image:: ../../_static/class1/module2/img007.png
     :align: center
     :scale: 30%
 
-.. image:: ../../_static/class1/module1/img008.png
+|
+
+.. image:: ../../_static/class1/module2/img008.png
     :align: center
     :scale: 30%
 
-.. image:: ../../_static/class1/module1/img009.png
+|
+
+.. image:: ../../_static/class1/module2/img009.png
     :align: center
     :scale: 30%
 
+|
 
+Trigger the application deployment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+In this demo, we use the *DELETE* file to leverage either the APP deployment, or its removal:
+* if the *DELETE* file is added to the repo: we will remove the application and its ADC services
+* if the *DELETE* file is removed from the repo: we will deploy the application and its ADC services
 
-Trigger the app deployment
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+If everything is up and running as expected, you'll only need to do the following to trigger the deployment 
+of the application: 
 
-In this demo, we use the *DELETE* file to leverage either the APP deployment, or its removal. 
-
-If everything is up and running as expect, you'll only need to do the following to trigger the deployment 
-of the app: 
-
-* Delete the *DELETE* file from the **my-webapp-ci-cd-demo** repo. 
+* Remove the *DELETE* file from the **my-webapp-ci-cd-demo** repo. 
 * if you use an editor instead of the GitLab UI, make sure to commit your changes to trigger the WebHook. 
 
 Here is how to do it from the *GitLab* UI: 
 
-* Open the tab showing your **my-webapp-ci-cd-demo** repo and click on the *DELETE* file. 
+* Open the tab showing your **my-webapp-ci-cd-demo** repo and click on the *DELETE* file.
+  (make sure to be in the *dev* repo!)
 
-.. image:: ../../_static/class1/module1/img004.png
+.. image:: ../../_static/class1/module2/img004.png
     :align: center
     :scale: 30%
 
 * Click on the red *DELETE* button on the right
 
-.. image:: ../../_static/class1/module1/img005.png
+.. image:: ../../_static/class1/module2/img005.png
     :align: center
     :scale: 30%
 
 * Confirm that you want to delete the file by clicking on the *Delete File* button.
 
-.. image:: ../../_static/class1/module1/img006.png
+.. image:: ../../_static/class1/module2/img006.png
     :align: center
     :scale: 30%
 
 As soon as you'll do it from the GUI of *GitLab* it will be committed.
+
+.. image:: ../../_static/class1/module2/img010.png
+    :align: center
+    :scale: 30%
+
+At this moment, switch to the *Jenkins* tab showing the pipeline called **my-webapp-ci-cd-demo-dev**.
+You will see a new *build* being triggered after a few seconds. 
+
+.. image:: ../../_static/class1/module2/img011.png
+    :align: center
+    :scale: 30%
+
+Here you can see the different steps being processed in this pipeline: 
+
+* *build app*: the application gets deployed in Openshift
+* *test app*: we run the different tests against the application and make sure we get the right response code
+  (defined in the folder **tests** in the repo **my-webapp-ci-cd-demo**) 
+* *build ADC services definition*: we extract the IP of the application to add it to the service definition 
+  provided in the **my-webapp-ci-cd-demo** repo.
+* *Test ADC Service definition*: We test this service definition against the targetted BIG-IP cluster to 
+  ensure it is properly defined without errors
+* *Push ADC Service definition*: We update the repo **ADC-Services** in our *Gitlab* repo to add this application
+  in the right cluster. Here it is in the **cluster-nicolas** directory
+
+If everything goes as expected, you should see the whole line of the build being green: 
+
+.. image:: ../../_static/class1/module2/img012.png
+    :align: center
+    :scale: 30%
+
+.. note:: if you have a step failing, the whole build will stop. To troubleshoot it, don't hesitate to click on the build
+    number and then *Console Output*
+
+    .. image:: ../../_static/class1/module2/img014.png
+        :align: center
+        :scale: 30%
+
+    .. image:: ../../_static/class1/module2/img015.png
+        :align: center
+        :scale: 30%
+
+    Here you'll see the whole pipeline being executed with all the different outputs. Check for any relevant error messages
+
+We can check that the application has been deployed successfully, go to your minishift tab and you should see 
+a new application: 
+
+.. image:: ../../_static/class1/module2/img016.png
+    :align: center
+    :scale: 30%
+
+You can click on the route link to ensure the application works as expected. 
+
+.. image:: ../../_static/class1/module2/img017.png
+    :align: center
+    :scale: 30%
+
+|
+
+.. image:: ../../_static/class1/module2/img018.png
+    :align: center
+    :scale: 30%
+
+The last step of the build updated the **ADC-Services** repo to add our new application services. 
+Go to the tab opened on *GitLab* and your **ADC-Services** repo (make sure to be in the **dev** branch!). 
+Click on the folder **cluster-nicolas**. you should see a new directory called **my-webapp-ci-cd-demo**. 
+This was pushed by our pipeline processed by *Jenkins*
+
+.. image:: ../../_static/class1/module2/img019.png
+    :align: center
+    :scale: 30%
+
+Click on this newly provisioned folder **my-webapp-ci-cd-demo**
+
+.. image:: ../../_static/class1/module2/img019.png
+    :align: center
+    :scale: 30%
+
+You'll see two files: 
+
+* service-definition: it contains the service definition that was provided by the app owner in the other repo. 
+  This service definition was updated with the relevant pool member delivering the app (minishift IP)
+* tests.json: we also copied the *tests* file from the application repo since we want to make sure the same tests 
+  will behave in an identical manner through the ADC
+
+.. image:: ../../_static/class1/module2/img013.png
+    :align: center
+    :scale: 30%
+
