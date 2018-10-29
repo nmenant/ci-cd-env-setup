@@ -3,7 +3,7 @@ Review Gitlab setup
 
 We have setup the following in GitLab: 
 
-* A Tenant/User called **TenantA**. It host all the applications and adc services tied to this tenant.
+* A Tenant/User called **TenantA**. It hosts all the applications and adc services tied to this tenant.
   You can have multiple applications owned by this user and multiple BIG-IP/ADC services here. 
 * For this demo, we will use two different repos in **TenantA**: *my-webapp-ci-cd-demo* and *ADC-Services* 
 
@@ -16,7 +16,7 @@ Connect to your Gitlab. It should be http://<IP of your VM>:1080/
     :align: center
     :scale: 50%
 
-**my-webapp-ci-cd-demo** contains the application definition and the **ADC Services** we want to attach to it. 
+**my-webapp-ci-cd-demo** contains the application definition and the ADC services* we want to attach to it. 
 It leverages the AS3 definition of a service. 
 
 **ADC Services** contains all the services tied to this User/Tenant. It will contain all the different services needed 
@@ -24,7 +24,7 @@ by the application defined in this tenant.
 
 .. note:: it is worth highlighting that in each repo, we leverage the dev branch. The idea is to explain how you can
     create a CI/CD pipeline for the dev branch and replicate the same process for the *master* or *prod* branch. for this 
-    demo, we will use the dev branch. Make sure to select the right branch when browsing gitlab 
+    demo, we will use the dev branch. Make sure to select the right branch when browsing *GitLab*. 
 
 Gitlab setup - my-webapp-ci-cd-demo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -35,13 +35,13 @@ Once you've selected the *dev* branch, you should see different folders in the *
     :align: center
     :scale: 50%
  
-* jenkins: This is folder that will be consumed by the CI Server. It contains all the right scripts to process this folder and 
+* *jenkins*: This is folder that will be consumed by the CI Server. It contains all the right scripts to process this folder and 
   do the app deployment, update the ADC-services repo, ...
-* my-adc-cluster: this folder will contain the ADC target to host our ADC service. It contains the name of the targetted cluster
+* *my-adc-cluster*: this folder will contain the ADC target to host our ADC service. It contains the name of the targetted cluster
   and the ADC service to deploy on it. Consul will provide us with all the right information related to it: BIG-IP IPs, credentials, ...
-* my-app-definition: this folder contains the app definition. It contains files that we will use to deploy the app on Openshift: 
+* *my-app-definition*: this folder contains the app definition. It contains files that we will use to deploy the app on Openshift: 
   deployment, services, route
-* test: this folder contains multiple tests to do against the app to ensure it is up and running as expected. 
+* *test*: this folder contains multiple tests to do against the app to ensure it is up and running as expected. 
 
 
 .. note:: it is worth highlighting that the ADC service definition is based on the AS3 schema 
@@ -52,8 +52,9 @@ Once you've selected the *dev* branch, you should see different folders in the *
 There is also an important file at the root of the repo: *jenkinsFile*. 
 When you trigger a webhook from GitLab to Jenkins, the first thing Jenkins will do is to
 retrieve this repo. 
-From here, it will process the jenkinsFile to know what to do.  The whole pipeline is defined 
-in this file and it will execute scripts in the jenkins folder
+From here, it will process the jenkinsFile to know what to do (there are other ways but that is 
+how we will proceed here).  The whole pipeline is defined in this file and it will execute scripts 
+in the jenkins folder
 
 Every time this repo is updated, it will trigger an already defined *WebHook*. 
 This *WebHook* will trigger a pipeline on the Jenkins server. In your **my-webapp-ci-cd-demo** repo,
@@ -73,15 +74,54 @@ Here you can see that *GitLab* is setup to send a "signal" to:
 
     http://172.18.0.3:8080/project/my-webapp-ci-cd-demo-dev
 
-172.18.0.3 is the IP Address of our container running *Jenkins*. The URI: */project/my-webapp-ci-cd-demo-dev* 
-defines a project defined on *Jenkins*. This is our pipeline. 
+172.18.0.3 is the IP Address of our container running *Jenkins* (it's a docker network). 
+The URI: */project/my-webapp-ci-cd-demo-dev*  defines a project/job/pipeline defined on *Jenkins*. 
+This is our pipeline. 
 
 This specific pipeline will be triggered every time we update our **my-webapp-ci-cd-demo** repo.
 
 .. note:: There is a file called *DELETE* at the root of the **my-webapp-ci-cd-demo** repo. This file 
-    is needed to do the IaC demo. We will explain this in lab3. 
+    is needed to do the IaC demo. We will explain this in module2. 
 
     .. image:: ../../_static/class1/module1/img004.png
         :align: center
         :scale: 30%
- 
+
+Gitlab setup - ADC-Services
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you go into the repo **ADC-Services** and select the *dev* branch, you should see this: 
+
+.. image:: ../../_static/class1/module1/img005.png
+    :align: center
+    :scale: 30%
+
+Here you should have a folder(s) (here one). Each directory represents a BIG-IP cluster. 
+In this case, we have a single cluster called **cluster-nicolas**
+
+.. note:: this cluster is defined in consul so that we can automatically retrieve its IP information,
+    credentials and which port is used to access the management interface. We could add more cluster here
+    if needed
+
+The different python scripts available here will be used by the *jenkinsFile* to execute the *Jenkins pipeline*
+called **adc-services-dev**.
+
+if you check the folder **cluster-nicolas**, you'll see that its empty for now. The reason is that we 
+haven't deployed yet an application in this cluster. There is only one file called *OWNER*. 
+
+.. image:: ../../_static/class1/module1/img006.png
+    :align: center
+    :scale: 30%
+
+The main reason for this *OWNER* file was to put something into the folder. If the folder was empty, it wouldn't 
+show up in *GitLab*.
+
+We can also check the *WebHook* created by going into *Settings* > *Integration*: 
+
+.. image:: ../../_static/class1/module1/img007.png
+    :align: center
+    :scale: 30%
+
+.. warning:: There is something really specific about this **ADC-Services** repo: **IT IS NEVER HANDLED MANUALLY**. 
+    The expectation here is that the different applications deployed via *GitLab* will automatically update accordingly 
+    this repo. This is something we will be able to test/confirm when doing module2. 
