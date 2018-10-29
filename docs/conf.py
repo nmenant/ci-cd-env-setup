@@ -153,3 +153,7 @@ texinfo_documents = [
      author, 'CICDwithDevOpstools', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+import f5_sphinx_theme
+html_theme = 'f5_sphinx_theme'
+html_sidebars = {'**': ['searchbox.html', 'localtoc.html', 'globaltoc.html']}
