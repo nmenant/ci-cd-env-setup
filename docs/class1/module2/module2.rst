@@ -1,5 +1,5 @@
-Module 1 - Review the setup 
-===========================
+Module 2 - Trigger the IaC Demo 
+===============================
 
 In this module, we will show you how to do a demo of IaC (*Infrastructure as Code*) 
 with F5 solutions: 
