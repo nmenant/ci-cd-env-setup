@@ -44,8 +44,19 @@ Once you've selected the *dev* branch, you should see different folders in the *
  
 * *jenkins*: This is folder that will be consumed by the CI Server. It contains all the right scripts to process this folder and 
   do the app deployment, update the ADC-services repo, ...
-* *my-adc-cluster*: this folder will contain the ADC target to host our ADC service. It contains the name of the targetted cluster
-  and the ADC service to deploy on it. Consul will provide us with all the right information related to it: BIG-IP IPs, credentials, ...
+* *my-adc-cluster*: this folder will contain the ADC cluster target to host our ADC service. It contains the name of the targetted 
+  cluster. Consul will provide us with all the right information related to it: BIG-IP IPs, credentials, 
+  ... You will also see the service we want to deploy on our ADC cluster. Take some time to review the service definition. 
+  You will see that: we leverage the AS3 service definition schema, pool members are not *yet* defined and that our service 
+  definition includes a WAF policy. 
+
+  .. image:: ../../_static/class1/module1/img012.png
+    :align: center
+    :scale: 50%
+ 
+  The pool member(s) are not defined already because the application is not deployed. In a dynamic environment, you can't guess 
+  what the pool member(s) will be. We will need to deploy the application, get the pool member(s) information and update our service 
+  definition accordingly. 
 * *my-app-definition*: this folder contains the app definition. It contains files that we will use to deploy the app on Openshift: 
   deployment, services, route
 * *test*: this folder contains multiple tests to do against the app to ensure it is up and running as expected. 
@@ -132,3 +143,24 @@ We can also check the *WebHook* created by going into *Settings* > *Integration*
 .. warning:: There is something really specific about this **ADC-Services** repo: **IT IS NEVER HANDLED MANUALLY**. 
     The expectation here is that the different applications deployed via *GitLab* will automatically update accordingly 
     this repo. This is something we will be able to test/confirm when doing module2. 
+
+Gitlab setup - Larry/Security-Policies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Here there is no *dev* branch. We only have already "approved" security policies that can be consumed by 
+the different application teams. They can retrieve those security policies and import them into their *CI/CD pipelines*. 
+
+If you browse this repository, you'll see the following: 
+
+.. image:: ../../_static/class1/module1/img010.png
+    :align: center
+    :scale: 30%
+
+Click on the folder *policies* to see what is available to the application teams.
+
+.. image:: ../../_static/class1/module1/img011.png
+    :align: center
+    :scale: 30%
+
+Here we see that people have access to three different WAF policies. In our demo, we will use the policy called 
+*asm-policy-linux-high.xml*.
