@@ -8,8 +8,15 @@ Here is the recommended worklow to do this demo.
 
 Open different tabs in your browser: 
 
-* Open 2 *GitLab* tabs: one for the **my-webapp-ci-cd-demo** repo and the other one for the 
-  **ADC-Services** repo. **don't forget to go to the DEV branch**. 
+* Open 3 *GitLab* tabs: 
+
+    * one for the **my-webapp-ci-cd-demo** repo. **don't forget to go to the DEV branch** 
+      (login: TenantA,Password: Pa55w0rd)
+    * one for the **ADC-Services** repo. **don't forget to go to the DEV branch**.
+      (Login: TenantA,Password: Pa55w0rd)
+    * one for the **Security Policies** repo. (login: root, Password: Pa55w0rd - go to *Projects* > 
+      *Explore Projects* > *All*)
+
 * Open 2 *Jenkins* tabs: one for the **my-webapp-ci-cd-demo-dev** project and the other one 
   for the **adc-services-dev** project. **don't forget to go to the DEV branch**. 
 * Open 1 tab on your BIG-IP to show its configuration (highlight that there is no *tenanta-dev* partition
@@ -219,6 +226,8 @@ You can go to your BIG-IP tab, to see if a new application service has been depl
 .. image:: ../../_static/class1/module2/img022.png
     :align: center
     :scale: 30%
+
+Check the settings of the Virtual Server to show that a WAF policy has been assigned to it. 
 
 You can try to reach the application through the BIG-IP now. Be aware that you'll need to either: 
 
