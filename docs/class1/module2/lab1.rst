@@ -71,6 +71,18 @@ Make sure that:
 
 |
 
+Before trigger the application deployment, it may good good to give a brief overview of the setup: 
+
+* Highlights the different DevOps tools used: Gitlab, Jenkins, Consul, Minishift, BIG-IP, AS3 
+* Explain what are the 3 *GitLab* repo and who owns each (TenantA is an application owner deploying while Larry 
+  is part of the SecOps team). 
+* Describe how *WebHooks* will trigger our *Jenkins pipelines*
+* Explain how the *my-webapp-ci-cd-demo-dev* *pipeline* will automatically manage the **ADC-Services** repo.
+* Explain that the **ADC-Services** repo becomes the "*Source of Truth*" of ADC services deployment (you can 
+  talk about *Infrastructure as Code (IaC)* 
+
+Everything is detailed in module1 for more detailed information
+
 Trigger the application deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
