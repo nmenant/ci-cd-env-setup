@@ -219,7 +219,7 @@ This is our *jenkinsFile*:
     }
 
 
-Here our jenkinsFile will do the following: 
+Our jenkinsFile will do the following: 
 
 * Retrieve another *GitLab* repo: **ADC-Services**. Once the app is deployed, we want to update this
   repo with the new service definition
