@@ -219,7 +219,7 @@ This is our *jenkinsFile*:
     }
 
 
-Here our jenkinsFile will do the following: 
+Our jenkinsFile will do the following: 
 
 * Retrieve another *GitLab* repo: **ADC-Services**. Once the app is deployed, we want to update this
   repo with the new service definition
@@ -237,3 +237,96 @@ Here our jenkinsFile will do the following:
   **my-webapp-ci-cd-demo** we retrieved. it is the step called *Push ADC Service definition* in the 
   *build*. This script will update the repo **ADC-Services** and then will push the changes to *GitLab*
 
+The adc-services-dev pipeline
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The other *pipeline* available on *Jenkins* is called **adc-services-dev**. 
+
+.. image:: ../../_static/class1/module1/img024.png
+    :align: center
+    :scale: 50%
+
+You can click on *Configure* to review its setup. 
+
+.. image:: ../../_static/class1/module1/img025.png
+    :align: center
+    :scale: 50%
+
+Here a summary of its configuration: 
+
+* It's "linked" to the *GitLab* repo **ADC-Services**
+* It's setup to be triggered by a *WebHook* going to *http://172.18.0.3:8080/project/adc-services-dev*. 
+  Remember that the **ADC-Services** *GitLab* repository has been setup to reach to this URL when a commit 
+  happen. 
+* It will rely on the script path *jenkinsFile* setup in the **ADC-Services** repo (root directory)
+
+.. image:: ../../_static/class1/module1/img026.png
+    :align: center
+    :scale: 50%
+
+| 
+
+.. image:: ../../_static/class1/module1/img027.png
+    :align: center
+    :scale: 50%
+
+|
+
+.. image:: ../../_static/class1/module1/img027.png
+    :align: center
+    :scale: 50%
+
+Here is the jenkinsFile in the **ADC-Services** repo: 
+
+::
+
+    #!groovy
+
+    pipeline {
+        agent any
+        stages {
+    	    stage('Setup Env') {
+	        steps {
+    	  	        sh 'python --version'
+    		        echo 'Setup environment and needed modules'
+    	        }
+    	    }
+           stage('Build AS3 Declaration') {
+               steps {
+    		        echo 'Building Application...'
+    		        sh 'git log -1 > commit_msg.tmp'
+    		        sh 'python create-as3-declaration.py `cat commit_msg.tmp | grep "=" | rev | cut -d= -f1 | rev` $GIT_URL $GIT_BRANCH' 
+            }
+          }
+          stage('Test AS3 Declaration') {
+              steps {
+                  echo 'Test AS3 Declaration...'
+    		        sh 'python test-adc-services.py'
+    	   }
+          }
+          stage('Deploy AS3 Declaration') {
+              steps {
+                  echo 'Deploy ADC Services'
+                	sh 'python deploy-adc-services.py'
+            }
+          }
+          stage('Test ADC and App') {
+              steps {
+                  echo 'Testing ADC and Application...'
+                  sh 'python test-app-adc-services.py `cat commit_msg.tmp | grep "=" | rev | cut -d= -f1 | rev`'
+            }
+          }
+      }
+      post {
+          always { 
+              cleanWs()
+          }
+    	    success {
+    	    	updateGitlabCommitStatus name: 'build', state: 'success'
+    	    }
+    	    failure {
+    		    updateGitlabCommitStatus name: 'build', state: 'failed'
+    	    }
+      }
+    
+Here you can review the different "steps" of the pipeline and which scripts are tied to each steps. 
