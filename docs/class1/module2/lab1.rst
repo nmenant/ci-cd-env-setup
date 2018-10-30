@@ -81,7 +81,7 @@ Before trigger the application deployment, it may good good to give a brief over
 * Explain that the **ADC-Services** repo becomes the "*Source of Truth*" of ADC services deployment (you can 
   talk about *Infrastructure as Code (IaC)* 
 
-Everything is detailed in module1 for more detailed information
+Everything is detailed in module1.
 
 Trigger the application deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
