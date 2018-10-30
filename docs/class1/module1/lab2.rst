@@ -146,6 +146,79 @@ If you want to know more about jenkinsFile, you can check this JenkinsFileLink_
 
 .. _JenkinsFileLink: https://jenkins.io/doc/book/pipeline/jenkinsfile/
 
+This is our *jenkinsFile*: 
+
+::
+
+    #!groovy
+
+    pipeline {
+        agent any
+        stages {
+	        stage('Setup Env') {
+	            steps {
+	      	        sh 'python --version'
+	        	    echo 'Setup environment and needed modules'
+                   	sh 'git config --global user.email "n.menant@f5.com"'
+                    sh 'git config --global user.name "Nicolas Menant"'
+                    echo 'Cloning ADC-Services repo'
+                    sh 'git clone http://TenantA:Pa55w0rd@172.18.0.2/nicolas/ADC-Services.git' 
+	                dir('ADC-Services') {
+                        sh 'git checkout dev'
+                    } 
+	            }
+	        }
+            stage('Build App') {
+                steps {
+	        	    echo 'Building Application...'
+		            sh 'python jenkins/deploy-app/deploy-app.py' 
+                }
+            }
+            stage('Test App') {
+                steps {
+	    	        echo 'Testing Application...'
+		            sh 'sleep 10'
+                    sh 'python tests/run_tests.py' 
+                }
+            }
+            stage('Build ADC Services definition') {
+                steps {
+	            	echo 'Build ADC Services definition...'
+		            sh 'python jenkins/adc-services/create-adc-services-definition.py'
+	            }
+            }
+            stage('Test ADC Service definition') {
+                steps {
+                    echo 'Testing ADC Service Definition ..'
+                    sh 'python jenkins/adc-services/test-service-definition.py'
+                }
+            }
+	        stage('Push ADC Service definition') {
+                steps {
+                    sh 'echo ${GIT_URL##*/} > appname.tmp'
+                    sh 'python jenkins/adc-services/push-adc-services-definition.py'
+                    dir('ADC-Services') {
+                            sh 'git add .'
+                            sh 'git commit -m "update from $GIT_URL / $GIT_BRANCH=`cat ../appname.tmp`###`cat ../my-adc-cluster/target-cluster`"'
+                            sh 'git push'
+                    }
+	            }
+            }
+        }
+        post {
+            always { 
+                cleanWs()
+            }
+	        success {
+	        	updateGitlabCommitStatus name: 'build', state: 'success'
+	        }
+	        failure {
+	    	    updateGitlabCommitStatus name: 'build', state: 'failed'
+	        }
+        }
+    }
+
+
 Here our jenkinsFile will do the following: 
 
 * Retrieve another *GitLab* repo: **ADC-Services**. Once the app is deployed, we want to update this
