@@ -5,26 +5,33 @@ We have setup the following in GitLab:
 
 * A Tenant/User called **TenantA**. It hosts all the applications and adc services tied to this tenant.
   You can have multiple applications owned by this user and multiple BIG-IP/ADC services here. 
-* For this demo, we will use two different repos in **TenantA**: *my-webapp-ci-cd-demo* and *ADC-Services* 
+  For this demo, we will use two different repos in **TenantA**: *my-webapp-ci-cd-demo* and *ADC-Services* 
+* Another Tenant/User called **Larry**. It hosts all the *Web Application Firewall* policies that people
+  can leverage/consume. 
 
 Connect to your Gitlab. It should be http://<IP of your VM>:1080/
 
-* Login: TenantA
+* Login: root
 * Password: Pa55w0rd
 
-.. image:: ../../_static/class1/module1/img001.png
+Click on *Projects* > *Explore Projects* > *All*
+
+.. image:: ../../_static/class1/module1/img009.png
     :align: center
     :scale: 50%
 
 **my-webapp-ci-cd-demo** contains the application definition and the ADC services* we want to attach to it. 
-It leverages the AS3 definition of a service. 
+It leverages the AS3 definition of a service. It is owned by the user/group called *TenantA*
 
 **ADC Services** contains all the services tied to this User/Tenant. It will contain all the different services needed 
-by the application defined in this tenant. 
+by the application defined in this tenant. It is owned by the user/group called *TenantA*
 
 .. note:: it is worth highlighting that in each repo, we leverage the dev branch. The idea is to explain how you can
     create a CI/CD pipeline for the dev branch and replicate the same process for the *master* or *prod* branch. for this 
     demo, we will use the dev branch. Make sure to select the right branch when browsing *GitLab*. 
+
+**Security-Policies** contains all the approved *Web Application Firewall* policies. People can retrieve them to use on their 
+WAF solution. It is owned by the user/group called *Larry*
 
 Gitlab setup - my-webapp-ci-cd-demo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
