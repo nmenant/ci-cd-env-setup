@@ -15,7 +15,10 @@ In this lab, we have setup different DevOps tools to do the demonstration:
 
   .. _AS3: https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/3/
 
-  
+  If you just want to do a CI/CD Demo with F5 BIG-IP and AS3, you may review module2 to see how 
+  to do a demo. 
+  If you want a deeper understanding of the setup, module1 will give you an overview of how everything 
+  is setup to work together.
 
 
 .. toctree::
