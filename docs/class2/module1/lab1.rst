@@ -3,6 +3,9 @@ Setup a new GitLab repo
 
 In this lab, we will create a new repo called **Class2** on *GitLab*.
 
+Access GitLab
+^^^^^^^^^^^^^
+
 Connect to your Gitlab. It should be http://<IP of your VM>:1080/
 
 * Login: TenantA

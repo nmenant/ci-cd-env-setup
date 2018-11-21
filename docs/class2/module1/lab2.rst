@@ -1,6 +1,9 @@
 Update the GitLab repo
 ----------------------
 
+Access GitLab
+^^^^^^^^^^^^^
+
 In this lab, we will update our new repo called **Class2** on *GitLab*.
 
 Connect to your Gitlab. It should be http://<IP of your VM>:1080/
