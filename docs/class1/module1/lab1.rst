@@ -20,14 +20,14 @@ Click on *Projects* > *Explore Projects* > *All*
     :align: center
     :scale: 50%
 
-**my-webapp-ci-cd-demo** contains the application definition and the ADC services* we want to attach to it. 
+**my-webapp-ci-cd-demo** contains the application definition and the *ADC services* we want to attach to it. 
 It leverages the AS3 definition of a service. It is owned by the user/group called *TenantA*
 
 **ADC Services** contains all the services tied to this User/Tenant. It will contain all the different services needed 
 by the application defined in this tenant. It is owned by the user/group called *TenantA*
 
 .. note:: it is worth highlighting that in each repo, we leverage the dev branch. The idea is to explain how you can
-    create a CI/CD pipeline for the dev branch and replicate the same process for the *master* or *prod* branch. for this 
+    create a CI/CD pipeline for the dev branch and replicate the same process for the *master* or *prod* branch. For this 
     demo, we will use the dev branch. Make sure to select the right branch when browsing *GitLab*. 
 
 **Security-Policies** contains all the approved *Web Application Firewall* policies. People can retrieve them to use on their 

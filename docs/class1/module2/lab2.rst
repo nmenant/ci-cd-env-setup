@@ -7,7 +7,7 @@ We expect that you still have the different tabs opened during the previous lab:
   **ADC-Services** repo. **don't forget to go to the DEV branch**. 
 * 2 *Jenkins* tabs: one for the **my-webapp-ci-cd-demo-dev** project and the other one 
   for the **adc-services-dev** project. **don't forget to go to the DEV branch**. 
-* 1 tab on your BIG-IP to show its configuration (highlight that there is no *tenanta-dev* partition
+* 1 tab on your BIG-IP to show its configuration
 * 1 tab on your minishift deployment (*login*: dev, *password*: dev). Go in the *tenanta-dev* project
 
 Trigger the removal
@@ -52,7 +52,7 @@ Here we can see that a new build has been processed and its all green. It means 
     :scale: 30%
 
 * Our *GitLab* repo **ADC-Services** should have the directory called **cluster-nicolas** empty except for an *OWNER* 
-  file. Validate this being going to your tab opened on *GitLab* and showing the **ADC-Services* repo: 
+  file. Validate this by going to your opened tab on *GitLab* and showing the **ADC-Services* repo: 
 
   .. image:: ../../_static/class1/module2/img028.png
     :align: center
