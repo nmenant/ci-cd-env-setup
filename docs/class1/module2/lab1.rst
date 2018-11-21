@@ -71,10 +71,10 @@ Make sure that:
 
 |
 
-Before trigger the application deployment, it may good good to give a brief overview of the setup: 
+Before triggering the application deployment, it may good good to give a brief overview of the setup: 
 
 * Highlights the different DevOps tools used: Gitlab, Jenkins, Consul, Minishift, BIG-IP, AS3 
-* Explain what are the 3 *GitLab* repo and who owns each (TenantA is an application owner deploying while Larry 
+* Explain what are the 3 *GitLab* repo and who owns each (TenantA is an application owner while Larry 
   is part of the SecOps team). 
 * Describe how *WebHooks* will trigger our *Jenkins pipelines*
 * Explain how the *my-webapp-ci-cd-demo-dev* *pipeline* will automatically manage the **ADC-Services** repo.
@@ -87,6 +87,7 @@ Trigger the application deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this demo, we use the *DELETE* file to leverage either the APP deployment, or its removal:
+
 * if the *DELETE* file is added to the repo: we will remove the application and its ADC services
 * if the *DELETE* file is removed from the repo: we will deploy the application and its ADC services
 
@@ -117,7 +118,7 @@ Here is how to do it from the *GitLab* UI:
     :align: center
     :scale: 30%
 
-As soon as you'll do it from the GUI of *GitLab* it will be committed.
+As soon as you'll do it from the GUI of *GitLab*, it will be committed.
 
 .. image:: ../../_static/class1/module2/img010.png
     :align: center
@@ -181,7 +182,9 @@ You can click on the route link to ensure the application works as expected.
     :scale: 30%
 
 The last step of the build updated the **ADC-Services** repo to add our new application services. 
-Go to the tab opened on *GitLab* and your **ADC-Services** repo (make sure to be in the **dev** branch!). 
+
+Go to the tab opened on *GitLab* and on your **ADC-Services** repo (make sure to be in the **dev** branch!).
+
 Click on the folder **cluster-nicolas**. you should see a new directory called **my-webapp-ci-cd-demo**. 
 This was pushed by our pipeline processed by *Jenkins*
 
@@ -202,7 +205,7 @@ You'll see two files:
 * tests.json: we also copied the *tests* file from the application repo since we want to make sure the same tests 
   will behave in an identical manner through the ADC
 
-We can review the *commit* that was done by the *CI server* *Jenkins* by click on the *commit* menu
+We can review the *commit* that was done by the *CI server* *Jenkins* by clicking on the *commit* menu
 
 .. image:: ../../_static/class1/module2/img021.png
     :align: center
@@ -233,7 +236,7 @@ If everything is processed properly, the whole build line should be green as you
 You can go to your BIG-IP tab, to see if a new application service has been deployed: 
 
 * Select the partition *tenanta-dev*
-* check the virtual server and its status. The name of the VS will be the name of the application to which we appended the branch name
+* check the virtual server and its description. The description of the VS will be the name of the application to which we appended the branch name
 
 .. image:: ../../_static/class1/module2/img022.png
     :align: center
