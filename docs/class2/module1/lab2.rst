@@ -6,14 +6,21 @@ Access GitLab
 
 In this lab, we will update our new repo called **Class2** on *GitLab*.
 
-Connect to your Gitlab. It should be http://<IP of your VM>:1080/
+Connect to *GitLab*. It should be http://<IP of your VM>:1080/
 
 * Login: TenantA
 * Password: Pa55w0rd
 
-.. note:: If you use UDF (F5 private cloud), you should use the RDP Jumphost to access *GitLab*
+.. note:: If you use UDF (F5 private cloud), you may use the RDP Jumphost to access *GitLab*
+    or the direct HTTP access from UDF interface
 
     .. image:: ../../_static/class2/module1/img006.png
+        :align: center
+        :scale: 50%
+    
+    |
+    
+    .. image:: ../../_static/class2/module1/img016.png
         :align: center
         :scale: 50%
 
@@ -45,14 +52,8 @@ Update the new repo
 for this lab we will consider the following: 
 
 * If you use your own lab, you'll need access to the VM hosting *GitLab* from your terminal (via SSH)
-* If you use UDF.  you can either use the Jumphost and the Git Bash app OR open a SSH connection
-  to the CI/CD System
-
-.. note:: If you use UDF, you can access your CI / CD system like this
-  
-  .. image:: ../../_static/class2/module1/img010.png
-    :align: center
-    :scale: 50%
+* If you use UDF.  you can either use the **Jumphost** and the *Git Bash* app OR ``open a SSH connection
+  to the CI/CD System``
 
 Once you are connected to your system, we need to retrieve our *repo*. Our repo is 
 available on *Gitlab* on a URI that is structure this way: 

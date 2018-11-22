@@ -6,12 +6,12 @@ In this lab, we will create a new repo called **Class2** on *GitLab*.
 Access GitLab
 ^^^^^^^^^^^^^
 
-Connect to your Gitlab. It should be http://<IP of your VM>:1080/
+Connect to *GitLab*. It should be http://<IP of your VM>:1080/
 
 * Login: TenantA
 * Password: Pa55w0rd
 
-.. note:: If you use UDF (F5 private cloud), you should use the RDP Jumphost to access *GitLab*. 
+.. note:: If you use UDF (F5 private cloud), you ``must`` use the RDP Jumphost to access *GitLab*. 
     You have a shortcut on Chrome to access it. 
 
     .. image:: ../../_static/class2/module1/img006.png
