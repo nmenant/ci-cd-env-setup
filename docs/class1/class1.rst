@@ -4,7 +4,7 @@ Class 1 - demo IaC with CI/CD Tools
 
 This class will teach you how to do Infrastructure as Code (IaC) with F5 solutions. 
 
-In this lab, we have setup different DevOps tools to do the demonstration: 
+In this class, we have setup different DevOps tools to do the demonstration: 
 
 * Gitlab: It will host our applications and services definition
 * Jenkins: it will be our CI Server
