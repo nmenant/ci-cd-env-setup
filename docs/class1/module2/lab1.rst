@@ -19,8 +19,14 @@ Open different tabs in your browser:
 
 * Open 2 *Jenkins* tabs: one for the **my-webapp-ci-cd-demo-dev** project and the other one 
   for the **adc-services-dev** project. **don't forget to go to the DEV branch**. 
-* Open 1 tab on your BIG-IP to show its configuration (highlight that there is no *tenanta-dev* partition
+* Open 1 tab on your BIG-IP to show its configuration (highlight that there is no *tenanta-dev* partition)
+  
+  .. note:: if you use the **UDF** Blueprint, the BIG-IP login/password is admin/admin. 
+
 * Open 1 tab on your minishift deployment (*login*: dev, *password*: dev). Go in the *tenanta-dev* project
+
+  .. note:: if you use the **UDF** Blueprint, we can't access directly *Minishit* unfortunately. 
+    Use the the **Jumphost** to access *Minishift*
 
 .. WARNING:: if you use F5 private cloud UDF, make sure minishift is up and running. If it's not, check the 
     steps mentioned in the documentation of the blueprint/deployment. You likely need to run again: 

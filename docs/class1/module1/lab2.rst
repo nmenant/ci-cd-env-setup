@@ -48,13 +48,13 @@ On the *Jenkins* GUI, click on the pipeline called *my-webapp-ci-cd-demo-dev*
 
 You should see something like this : 
 
-.. image:: ../../_static/class1/module1/img014.png
+.. image:: ../../_static/class1/module1/img015.png
     :align: center
     :scale: 50%
 
-If you have never triggered the pipeline, the build section may be empty: 
+If you have already triggered the pipeline, the build section may look like this: 
 
-.. image:: ../../_static/class1/module1/img015.png
+.. image:: ../../_static/class1/module1/img014.png
     :align: center
     :scale: 50%
 
