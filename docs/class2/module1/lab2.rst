@@ -116,14 +116,14 @@ This is also what we see in the GUI of *GitLab*
     :scale: 50%
 
 As we can see in the GUI, right now we have only one branch and it is called **master**. 
-Usually we consider the **master** branch, the offical branch of the *repo*. this is the 
+Usually we consider the **master** branch, the offical branch of the *repo*. This is the 
 branch you usually want to check for the latest viable/stable/recommended version of a 
 *repo*. 
 
 When people want to work on a new version of the project, a new feature of the project, an 
-extenstion to it, ... they will create a new *branch*. By default this new *branch* will be 
+extension to it, ... they will create a new *branch*. By default, this new *branch* will be 
 identical to the *master* branch until you start changing stuff in it. We will be able to 
-merge later our changes into the **master** branch. 
+merge later our changes into the **master** branch (when required)
 
 If you want to know more about *branch*, you can review this link: Branch_.
 
