@@ -6,7 +6,7 @@ In this lab, we will create a new repo called **Class2** on *GitLab*.
 Access GitLab
 ^^^^^^^^^^^^^
 
-Connect to *GitLab*. It should be http://<IP of your VM>:1080/
+Connect to *GitLab*. It should be http://<your VM IP>:1080/
 
 * Login: TenantA
 * Password: Pa55w0rd
