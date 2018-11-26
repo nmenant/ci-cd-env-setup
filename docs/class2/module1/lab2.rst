@@ -107,6 +107,8 @@ run the following command:
 
 You should see this: 
 
+.. code:: 
+
     [centos@ip-10-1-1-5 Class2]$ git branch
     * master
 
