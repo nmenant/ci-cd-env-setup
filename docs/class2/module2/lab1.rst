@@ -111,7 +111,7 @@ Here we setup the following:
         :scale: 50%
 
     .. note:: sometimes you may see an error when specifying the **development** branch. 
-        ignore the error and keep creating the *pipeline.
+        Ignore the error and keep creating the *pipeline*.
 
 
 * In the *Pipeline* section, Select **Pipeline script from SCM**. 
