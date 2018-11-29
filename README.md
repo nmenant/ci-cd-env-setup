@@ -27,7 +27,7 @@ then:
 
     sudo yum update -y
     sudo yum upgrade -y
-    sudo yum install -y git docker net-tools wget firewalld
+    sudo yum install -y  git docker net-tools wget firewalld
     sudo systemctl start docker
     sudo systemctl enable docker
     sudo systemctl start firewalld
@@ -35,6 +35,11 @@ then:
     # Allow the user to run docker command without sudo - needed for Minishift
     sudo groupadd docker
     sudo usermod -aG docker $USER
+
+If you use vanilla CentOS, you need to:
+
+    install libvirt and qemu-kvm.  <https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html#for-linux>
+    make sure that your PATH variable contains /usr/local/bin
 
 Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
 into account until a restart is done.
