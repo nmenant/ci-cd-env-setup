@@ -39,7 +39,7 @@ then:
 If you use vanilla CentOS, you need to:
 
     install libvirt and qemu-kvm.  <https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html#for-linux>
-    make sure that your PATH variable contains /usr/local/bin
+    make sure that your PATH variable contains /usr/local/bin (PATH=$PATH:/usr/local/bin; export PATH)
 
 Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
 into account until a restart is done.
