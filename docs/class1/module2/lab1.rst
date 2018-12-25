@@ -25,7 +25,7 @@ Open different tabs in your browser:
 
 * Open 1 tab on your minishift deployment (*login*: dev, *password*: dev). Go in the *tenanta-dev* project
 
-  .. note:: if you use the **UDF** Blueprint, we can't access directly *Minishit* unfortunately. 
+  .. note:: if you use the **UDF** Blueprint, we can't access directly *Minishift* unfortunately. 
     Use the the **Jumphost** to access *Minishift*
 
 .. WARNING:: if you use F5 private cloud UDF, make sure minishift is up and running. If it's not, check the 
