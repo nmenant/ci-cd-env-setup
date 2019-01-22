@@ -11,10 +11,13 @@ Requirements
 
 CentOs specific requirements:
 
+Prepare the CentOs platforms
+----------------------------
+
 * The user must be allowed to do sudo commands without password (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 
       sudo visudo
-      add a line like this: 
+      # add a line like this: 
       "centos ALL=(ALL)       NOPASSWD: ALL"
       
 
@@ -26,16 +29,9 @@ CentOs specific requirements:
 * Disable SELinux (a reboot is required after)
 
       sudo vi /etc/selinux/config
-      and modify 
+      # and modify 
       "SELINUX=enforcing" to: "SELINUX=disabled"
-    
 
-Prepare the CentOs platforms
-----------------------------
-
-You'll need to do the following first:
-
-* Disable Selinux (/etc/selinux/config to be updated)
 * Reboot the instance
 
 then:
@@ -81,12 +77,15 @@ On one of the VM, we will install all the pipeline tools:
 * Jenkins
 * Consul
 
-To ihstall the pipeline tools, retrieve the github repository:
+To install the pipeline tools, retrieve the github repository:
 
     git clone https://github.com/nmenant/ci-cd-env-setup
     cd ci-cd-env-setup
 
-Run *build-env.sh pipeline* to install the different components:
+Run 
+
+      build-env.sh pipeline
+to install the different components:
 
 * Update the system
 * A user-defined network (ci-cd-docker-net) in docker will be created (172.18.0.0/16)
@@ -99,14 +98,17 @@ Everything will be started at the same time
 Installing the env - minishift
 -----------------------------------
 
-On this VM, we will install minishift
+On the other VM, we will install minishift
 
 To install minishift, retrieve the github repository:
 
     git clone https://github.com/nmenant/ci-cd-env-setup
     cd ci-cd-env-setup
 
-Run *build-env.sh minishift* to install minishift:
+Run 
+
+      build-env.sh minishift 
+to install minishift:
 
 * Update the system
 * Install Minishift in the VM. You'll be requested for the IP of this VM, the IP of the VM running the pipeline tools and the IP of the BIG-IP
@@ -192,24 +194,33 @@ Consul can be used to store infrastructure information leveraged by Jenkins. By 
 
 They are used in the 2 default jenkins pipeline. You still need to update a few variables based on your env:
 
-* you need to update minishift_ip with the IP of your minishift cluster. You can get this information with the command *minishift ip*
-* you need to update minishift_token with the token you'll get by creating a service account allowed to do API calls in your minishift project (<https://docs.openshift.com/container-platform/3.10/rest_api/index.html> - right now there is a bug in the doc, it's *oc policy add-role-to-user admin system:serviceaccount:test:robot* and not *oc policy add-role-to-user admin system:serviceaccounts:test:robot*)
+* you need to update minishift_ip with the IP of your minishift cluster. You can get this information with the command 
+
+      minishift ip
+* you need to update minishift_token with the token you'll get by creating a service account allowed to do API calls in your minishift project (<https://docs.openshift.com/container-platform/3.10/rest_api/index.html> - right now there is a bug in the doc, it's 
+
+      oc policy add-role-to-user admin system:serviceaccount:test:robot 
+and not *oc policy add-role-to-user admin system:serviceaccounts:test:robot*)
 * you need to update cluster_ips with the cluster of your BIG-IPs. You can put a single IP for a standalone deployment
-* if you changed the default credentials of your BIG-IP, you'll need to also update cluster_credentials
-* consul credentials have the format of "username:password"  
+
+      curl -X PUT -d cluster_ip http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
+* if you changed the default credentials of your BIG-IP, you'll need to also update cluster_credentials.
+Consul credentials have the format of "username:password"  
+
+      curl -X PUT -d username:password tenanta/ADC-Services/cluster-nicolas/cluster_credentials
 
 Update those values accordingly to your infrastructure
 
-    To check a key value:
+    # To check a key value:
     curl http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips?raw
-    IMPORTANT:
-    Consul encodes values per default in base64. To optain a non base64 value the GET request has to end with "?raw"
-    If "?raw" is not appendd then Consul will respond with a json blob and an base64 encoded value.
+    # IMPORTANT:
+    # Consul encodes values per default in base64. To optain a non base64 value the GET request has to end with "?raw"
+    # If "?raw" is not appendd then Consul will respond with a json blob and an base64 encoded value.
 
-    To update the value of a key:
+    # To update the value of a key:
     curl -X PUT -d "value" http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
         
-    To update the BIG-IP credentials: 
+    # To update the BIG-IP credentials: 
     curl -X PUT -d username:password tenanta/ADC-Services/cluster-nicolas/cluster_credentials
     
     
