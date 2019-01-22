@@ -13,7 +13,11 @@ CentOs specific requirements:
 
 * The user must be allowed to do sudo commands without password (use *sudo visudo* and add a line like *USERNAME ALL=(ALL)       NOPASSWD: ALL*)                         (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
 * You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
+    * example: ssh-keygen
+    * example: ssh-copy-id centos@hostIP
 * Disable SELinux (a reboot is required after)
+    * example: modify this file: "/etc/selinux/config"  and modify "SELINUX=enforcing" to: "SELINUX=disabled"
+    
 
 Prepare the CentOs platforms
 ----------------------------
@@ -175,13 +179,20 @@ They are used in the 2 default jenkins pipeline. You still need to update a few 
 * you need to update minishift_token with the token you'll get by creating a service account allowed to do API calls in your minishift project (<https://docs.openshift.com/container-platform/3.10/rest_api/index.html> - right now there is a bug in the doc, it's *oc policy add-role-to-user admin system:serviceaccount:test:robot* and not *oc policy add-role-to-user admin system:serviceaccounts:test:robot*)
 * you need to update cluster_ips with the cluster of your BIG-IPs. You can put a single IP for a standalone deployment
 * if you changed the default credentials of your BIG-IP, you'll need to also update cluster_credentials
+* consul credentials have the format of "username:password"  
 
 Update those values accordingly to your infrastructure
 
     To check a key value:
-    GET http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
+    curl http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips?raw
+    IMPORTANT:
+    Consul encodes values per default in base64. To optain a non base64 value the GET request has to end with "?raw"
+    If "?raw" is not appendd then Consul will respond with a json blob and an base64 encoded value.
 
     To update the value of a key:
-    PUT http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
-
-    192.168.143.13
+    curl -X PUT -d "value" http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
+        
+    To update the BIG-IP credentials: 
+    curl -X PUT -d username:password tenanta/ADC-Services/cluster-nicolas/cluster_credentials
+    
+    
