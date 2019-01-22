@@ -11,12 +11,23 @@ Requirements
 
 CentOs specific requirements:
 
-* The user must be allowed to do sudo commands without password (use *sudo visudo* and add a line like *USERNAME ALL=(ALL)       NOPASSWD: ALL*)                         (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
-* You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)
-    * example: ssh-keygen
-    * example: ssh-copy-id centos@hostIP
+* The user must be allowed to do sudo commands without password (<https://www.digitalocean.com/community/tutorials/how-to-edit-the-sudoers-file-on-ubuntu-and-centos>)
+
+      sudo visudo
+      add a line like this: 
+      "centos ALL=(ALL)       NOPASSWD: ALL"
+      
+
+* You must have created a ssh key and use ssh-copy-id locally on the IP of the device (not localhost)\
+
+      ssh-keygen
+      ssh-copy-id centos@hostIP
+    
 * Disable SELinux (a reboot is required after)
-    * example: modify this file: "/etc/selinux/config"  and modify "SELINUX=enforcing" to: "SELINUX=disabled"
+
+      sudo vi /etc/selinux/config
+      and modify 
+      "SELINUX=enforcing" to: "SELINUX=disabled"
     
 
 Prepare the CentOs platforms
@@ -42,8 +53,14 @@ then:
 
 If you use vanilla CentOS, you need to:
 
-    install libvirt and qemu-kvm <https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html>
-    make sure that your PATH variable contains /usr/local/bin (PATH=$PATH:/usr/local/bin; export PATH)
+    sudo yum install libvirt -y
+    sudo yum install quemu-kvm -y
+
+see: <https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html>
+
+Make sure that your PATH variable contains /usr/local/bin 
+    
+    PATH=$PATH:/usr/local/bin; export PATH
 
 Reboot your VM. it's required to be able to run docker command without sudo. Changes won't be taken
 into account until a restart is done.
