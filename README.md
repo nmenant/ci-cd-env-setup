@@ -199,8 +199,12 @@ They are used in the 2 default jenkins pipeline. You still need to update a few 
       minishift ip
 * you need to update minishift_token with the token you'll get by creating a service account allowed to do API calls in your minishift project (<https://docs.openshift.com/container-platform/3.10/rest_api/index.html> - right now there is a bug in the doc, it's 
 
-      oc policy add-role-to-user admin system:serviceaccount:test:robot 
+      eval $(minishift oc-env)
+      oc policy add-role-to-user admin system:serviceaccount:test:robot
+      oc serviceaccounts get-token robot > robot-token.json
+      
 and not *oc policy add-role-to-user admin system:serviceaccounts:test:robot*)
+
 * you need to update cluster_ips with the cluster of your BIG-IPs. You can put a single IP for a standalone deployment
 
       curl -X PUT -d cluster_ip http://127.0.0.1:8500/v1/kv/tenanta/ADC-Services/cluster-nicolas/cluster_ips
