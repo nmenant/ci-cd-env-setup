@@ -3,6 +3,8 @@ SETUP CI CD ENV
 
 This repo will automatically setup a "CI/CD" environment on the laptop with: Gitlab, Jenkins, Consul, Minishift and some default pipeline/examples
 
+The documentation of the examples with labs can be found hee: <https://f5-ci-cd-lab.readthedocs.io/en/master/ >
+
 Requirements
 ------------
 
