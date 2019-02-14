@@ -32,11 +32,19 @@ function install_minishift() {
     read -p 'BIG-IP IP: ' bigipip
     read -p 'BIG-IP Admin Port': bigipport
     if [[ "$unamestr" == 'Linux' ]]; then
+        #setup required packages
+        yum install -y dnf
+        sudo dnf install libvirt qemu-kvm
+        sudo usermod -a -G libvirt $(whoami)
+        newgrp libvirt
+        sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7 -o /usr/local/bin/docker-machine-driver-kvm
+        sudo sudo chmod +x /usr/local/bin/docker-machine-driver-kvm
+        sudo systemctl start libvirtd
         #echo "Linux deployment is not automated yet, please set it up yourself: https://docs.okd.io/latest/minishift/using/run-against-an-existing-machine.html#configuring-existing-remote-machine"
         mkdir minishift 
-        wget https://github.com/minishift/minishift/releases/download/v1.23.0/minishift-1.23.0-linux-amd64.tgz
-        tar zxf minishift-1.23.0-linux-amd64.tgz -C minishift/
-        sudo mv minishift/minishift-1.23.0-linux-amd64/minishift /usr/local/bin/
+        wget https://github.com/minishift/minishift/releases/download/v1.31.0/minishift-1.31.0-linux-amd64.tgz
+        tar zxf minishift-1.31.0-linux-amd64.tgz -C minishift/
+        sudo mv minishift/minishift-1.31.0-linux-amd64/minishift /usr/local/bin/
         sudo firewall-cmd --permanent --add-port 2376/tcp --add-port 8443/tcp --add-port 80/tcp
         dockernet=`sudo docker network inspect -f "{{range .IPAM.Config }}{{ .Subnet }}{{end}}" bridge`
         sudo firewall-cmd --permanent --new-zone minishift
@@ -47,7 +55,7 @@ function install_minishift() {
         minishift addons enable admin-user
         minishift start --vm-driver generic --remote-ipaddress $serverip --remote-ssh-user $USER --remote-ssh-key $HOME/.ssh/id_rsa --memory 4Gb
         minishift addon apply admin-user
-        rm minishift-1.23.0-linux-amd64.tgz
+        rm minishift-1.31.0-linux-amd64.tgz
     elif [[ "$platform" == 'MACOSX' ]]; then
         echo "Installing Minishift on a MACOSX platform" 
         brew cask install minishift
