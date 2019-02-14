@@ -33,10 +33,6 @@ function install_minishift() {
     read -p 'BIG-IP Admin Port': bigipport
     if [[ "$unamestr" == 'Linux' ]]; then
         #setup required packages
-        yum install -y dnf
-        sudo dnf install libvirt qemu-kvm
-        sudo usermod -a -G libvirt $(whoami)
-        newgrp libvirt
         sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7 -o /usr/local/bin/docker-machine-driver-kvm
         sudo sudo chmod +x /usr/local/bin/docker-machine-driver-kvm
         sudo systemctl start libvirtd

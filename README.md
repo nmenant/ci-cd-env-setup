@@ -53,6 +53,8 @@ If you use vanilla CentOS, you need to:
 
     sudo yum install libvirt -y
     sudo yum install quemu-kvm -y
+    sudo usermod -a -G libvirt $(whoami)
+    newgrp libvirt
 
 see: <https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html>
 
