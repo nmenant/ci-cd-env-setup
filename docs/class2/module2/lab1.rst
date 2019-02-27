@@ -188,19 +188,16 @@ scroll down).
     :align: center
     :scale: 50%
 
-You can test your *WebHook* by clicking on the **Test** button and select **Push events**. 
+.. note:: don't use the test button it won't work. This is because we setup our pipeline to only accept 
+            push events from the *development* branch. 
+            
+If you want to test your setup, go to your *development* branch and update the content of one of the file. 
 
 .. image:: ../../_static/class2/module2/img016.png
     :align: center
     :scale: 50%
 
-You should see the following: 
-
-* a Blue banner on the *GitLab* GUI: 
-
-    .. image:: ../../_static/class2/module2/img017.png
-        :align: center
-        :scale: 50%
+Once you've updated one of the two files, it will trigger our webhook. 
 
 * If you go back to the *Jenkins* GUI. You will see a red icon and 
     "stormy" cloud next our **class2-pipeline** pipeline. It means that the pipeline 
